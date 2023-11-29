@@ -74,7 +74,7 @@ enum Category {
 ///
 final dataForStudents = <ProductEntity>[
   ProductEntity(
-    title: 'Арбуз',
+    title: 'Арбуз арбуз арбуз арбуз арбуз арбуз арбуз арбуз',
     price: 1200,
     category: Category.food,
     imageUrl:
