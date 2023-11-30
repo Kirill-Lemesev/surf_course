@@ -42,7 +42,8 @@ class MainApp extends StatelessWidget {
           centerTitle: true,
           elevation: 0,
         ),
-        body: CustomBody()
+        body: CustomBody(),
+        bottomNavigationBar: CustomNavBar(),
 
       )
     );
@@ -106,7 +107,6 @@ class _CustomBodyState extends State<CustomBody> {
                         child: IconButton(
                         onPressed: () {
                           setState(() {
-
                             isActive = !isActive;
                           });
                           },
@@ -118,9 +118,103 @@ class _CustomBodyState extends State<CustomBody> {
                ]
             ),
           Container(
-            height: 500,
+            height: 400,
             child: ProductList(itemList: dataForStudents),
-          )
+          ),
+          Divider(color: AppColors.gray,),
+          SizedBox(height: 10,),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+            child: Row(
+              children: [
+                Text(
+                  'В вашей покупке',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.blue
+                  ),
+                ),
+              ]
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              children: [
+                Text(
+                  'Кол-во товаров',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.blue
+                  ),
+                ),
+                Expanded(child: SizedBox(height: 10,)),
+                Text(
+                  'Сумма без скидок',
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.blue
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              children: [
+                Text(
+                  'Cкидка',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.blue
+                  ),
+                ),
+                Expanded(child: SizedBox(height: 10,)),
+                Text(
+                  'Cумма скидки',
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.blue
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              children: [
+                Text(
+                  'Итого',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.blue
+                  ),
+                ),
+                Expanded(child: SizedBox(height: 10,)),
+                Text(
+                  'Итоговая сумма',
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.blue
+                  ),
+                )
+              ],
+            ),
+          ),
         ]
       ),
     );
@@ -173,12 +267,15 @@ class ProductItem extends StatelessWidget {
                         Expanded(
                           child: Text(
                             title,
+                            style: TextStyle(
+                              color: AppColors.blue
+                            )
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Expanded(child: SizedBox(width: 255,),),
+                  Expanded(child: SizedBox(width: 255,)),
                   Row(
                     children: [
                       Text(
@@ -215,7 +312,12 @@ class ProductItem extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Text('${price ~/ 100} руб') //  ~/ 100
+                                Text(
+                                    '${price ~/ 100} руб',
+                                    style: TextStyle(
+                                      color: AppColors.blue
+                                    ),
+                                ) //  ~/ 100
                               ],
                             ),
                           )
@@ -254,3 +356,58 @@ class ProductList extends StatelessWidget {
     }
 
 
+class CustomIcon extends StatelessWidget{
+
+  final Icon icon;
+  final String text;
+  final Color color;
+
+  CustomIcon({required this.icon, required this.text, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            icon,
+            Text(
+              text,
+              style: TextStyle(
+                  color: color
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class CustomNavBar extends StatelessWidget {
+
+  const CustomNavBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      decoration: BoxDecoration(
+          color: AppColors.white,
+          border: Border(top: BorderSide(color: AppColors.gray, width: 0.2))
+      ),
+      child: SafeArea(
+        child: Row(
+         children: [
+           CustomIcon(icon: Icon(Icons.article_outlined, color: AppColors.gray,), text: 'Каталог', color: AppColors.gray),
+           CustomIcon(icon: Icon(Icons.search, color: AppColors.gray,), text: 'Поиск', color: AppColors.gray),
+           CustomIcon(icon: Icon(Icons.local_mall_outlined, color: AppColors.gray,), text: 'Корзина', color: AppColors.gray),
+           CustomIcon(icon: Icon(Icons.person_outline, color: AppColors.lime,), text: 'Личное', color: AppColors.lime)
+         ],
+        ),
+      ),
+    );
+  }
+}
