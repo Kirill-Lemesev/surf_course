@@ -97,6 +97,7 @@ final dataForStudents = <ProductEntity>[
     amount: Quantity(1),
     imageUrl:
     'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1328&q=80',
+    sale: 0,
   ),
   ProductEntity(
     title: 'Миксер',
@@ -140,7 +141,7 @@ final dataForStudents = <ProductEntity>[
   ),
   ProductEntity(
     title: 'Аспирин',
-    price: 15,
+    price: 1500,
     amount: Quantity(1),
     category: Category.drugs,
     imageUrl:
@@ -148,7 +149,7 @@ final dataForStudents = <ProductEntity>[
   ),
   ProductEntity(
     title: 'Ибупрофен',
-    price: 54,
+    price: 5400,
     category: Category.drugs,
     amount: Quantity(1),
     imageUrl:
