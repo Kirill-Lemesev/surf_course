@@ -3,10 +3,10 @@ import 'package:badges/badges.dart' as badges;
 import 'models/list_of_purchase.dart';
 import 'package:intl/intl.dart';
 
+
 void main() => runApp(MainApp(dataForStudents));
 
 class MainApp extends StatelessWidget {
-
   List? productList;
 
   MainApp(this.productList);
@@ -14,53 +14,46 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: productList != null ? CheckScreen() : EmptyState()
-    );
+        home: (productList != null && productList!.isNotEmpty) ? CheckScreen() : const EmptyState());
   }
 }
 
 class EmptyState extends StatelessWidget {
-
-  EmptyState();
+  const EmptyState({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
+    return const ColoredBox(
       color: Colors.white,
       child: Center(
-        child: Text(
-          'Здесь ничего нет',
-          style: TextStyle(
-              fontSize: 18,
-              color: AppColors.blue
-          )
-        )
-      ),
+          child: Text('Здесь ничего нет',
+              style: TextStyle(fontSize: 18))),
     );
   }
 }
 
 class CheckScreen extends StatelessWidget {
-
   CheckScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: CustomAppBar(),
-      body: CustomBody(),
+      appBar: const CustomAppBar(),
+      body: const CustomBody(),
       bottomNavigationBar: CustomNavBar(),
     );
   }
 }
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  const CustomAppBar();
+
+
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
@@ -69,29 +62,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: true,
       leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () { },
-          color: AppColors.lime
-      ),
-      title: const Column(
-          children: [
-            Text(
-                'Чек № 56',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.blue
-                )
-            ),
-            Text(
-              '24.02.23 в 12:23',
-              style: TextStyle(
-                  fontSize: 10,
-                  color: AppColors.gray
-              ),
-            )
-          ]
-      ),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {},
+          color: AppColors.lime),
+      title: const Column(children: [
+        Text('Чек № 56',
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold)),
+        Text(
+          '24.02.23 в 12:23',
+          style: TextStyle(fontSize: 10, color: AppColors.gray),
+        )
+      ]),
     );
   }
 
@@ -100,48 +83,50 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class CustomBody extends StatefulWidget {
-
-  CustomBody();
+  const CustomBody({super.key});
 
   @override
   State<CustomBody> createState() => _CustomBodyState();
 }
 
 class _CustomBodyState extends State<CustomBody> {
-  late bool _isActive;
   late List _productList;
   late int _productsCount;
   late String _sum;
   late int _discountSize;
   late String _discount;
   late String _finalSum;
+  late int _sortState;
+  late bool _updateState;
 
   @override
   void initState() {
-    _isActive = false;
+    super.initState();
     _productList = separatorCategoryProducts(dataForStudents);
     _productsCount = dataForStudents.length;
     _sum = numberFormatter(sumCounter(dataForStudents));
     _discountSize = discountSize(dataForStudents);
-    _discount = numberFormatter(dicsountCounter(dataForStudents));
+    _discount = numberFormatter(discountCounter(dataForStudents));
     _finalSum = numberFormatter(finalSum(dataForStudents));
-    super.initState();
+    _sortState = 0;
+    _updateState = false;
   }
 
   String numberFormatter(int unformatedDigit) {
     var formatter = NumberFormat('#,###');
-    var formatedDigit = unformatedDigit >= 1000 ? formatter.format(unformatedDigit).replaceAll(',', ' ') :  unformatedDigit.toString();
-    return formatedDigit;
+    var formattedDigit = unformatedDigit >= 1000
+        ? formatter.format(unformatedDigit).replaceAll(',', ' ')
+        : unformatedDigit.toString();
+    return formattedDigit;
   }
 
   List separatorCategoryProducts(List nonSeparated) {
-
     Map categoryProducts = {};
 
     List widgetList = [];
 
     for (var e in nonSeparated) {
-      if(categoryProducts.containsKey(e.category.name)) {
+      if (categoryProducts.containsKey(e.category.name)) {
         categoryProducts[e.category.name].add(e);
       } else {
         categoryProducts[e.category.name] = [e];
@@ -150,25 +135,21 @@ class _CustomBodyState extends State<CustomBody> {
 
     categoryProducts.keys.forEach((e) {
       widgetList.add(CategoryItem(e));
-      for(var i in categoryProducts[e] ) {
-
+      for (var i in categoryProducts[e]) {
         String? sale;
 
         if (i.sale > 0) {
-          sale = numberFormatter(((i.price ~/ 100) * ((100 - i.sale) / 100)).toInt());
+          sale = numberFormatter(
+              ((i.price ~/ 100) * ((100 - i.sale) / 100)).toInt());
         }
 
         String price = numberFormatter((i.price / 100).toInt());
 
-
         widgetList.add(ProductItem(i.title, price, i.imageUrl, i.amount, sale));
-
-        }
+      }
 
       widgetList.add(DividerItem());
-
-      }
-    );
+    });
 
     return widgetList;
   }
@@ -177,280 +158,302 @@ class _CustomBodyState extends State<CustomBody> {
     double sum = 0;
     productList.forEach((e) {
       sum += e.price / 100;
-      }
-    );
+    });
 
     return sum.toInt();
   }
 
-  int dicsountCounter(List productList) {
+  int discountCounter(List productList) {
     double discount = 0;
     productList.forEach((e) {
       if (e.sale > 0) {
-        discount += (e.price / 100) - ((e.price ~/ 100) * ((100 - e.sale) / 100)).toInt();
-        }
+        discount += (e.price / 100) -
+            ((e.price ~/ 100) * ((100 - e.sale) / 100)).toInt();
       }
-    );
+    });
 
     return discount.toInt();
-
   }
 
   int finalSum(List productList) {
-
-    return sumCounter(productList) - dicsountCounter(productList);
-
+    return sumCounter(productList) - discountCounter(productList);
   }
 
   int discountSize(List productList) {
-    return ((dicsountCounter(productList) / sumCounter(productList)) * 100).round();
+    return ((discountCounter(productList) / sumCounter(productList)) * 100)
+        .round();
   }
+
+  List sortIncrease(List list) {
+
+    List sortedList = List.from(list);
+
+    for (var i = 0; i < sortedList.length -1; i++ ) {
+      for (var j = i + 1; j < sortedList.length; j++) {
+        var iPrice = sortedList[i].sale > 0 ? ((sortedList[i].price ~/ 100) * ((100 - sortedList[i].sale) / 100).toInt()) : sortedList[i].price;
+        var jPrice = sortedList[j].sale > 0 ? ((sortedList[j].price ~/ 100) * ((100 - sortedList[j].sale) / 100).toInt()) : sortedList[j].price;
+        if(iPrice > jPrice) {
+          var temp = sortedList[i];
+          sortedList[i] = sortedList[j];
+          sortedList[j] = temp;
+        }
+
+      }
+    }
+
+    return sortedList;
+  }
+
+  List sortDecrease(List list) {
+
+    List sortedList = List.from(list);
+
+    for (var i = 0; i < sortedList.length -1; i++ ) {
+      for (var j = i + 1; j < sortedList.length; j++) {
+        var iPrice = sortedList[i].sale > 0 ? ((sortedList[i].price ~/ 100) * ((100 - sortedList[i].sale) / 100).toInt()) : sortedList[i].price;
+        var jPrice = sortedList[j].sale > 0 ? ((sortedList[j].price ~/ 100) * ((100 - sortedList[j].sale) / 100).toInt()) : sortedList[j].price;
+        if(iPrice < jPrice) {
+          var temp = sortedList[i];
+          sortedList[i] = sortedList[j];
+          sortedList[j] = temp;
+        }
+
+      }
+    }
+
+    return sortedList;
+  }
+
+  void updateState(int newState) {
+
+    setState(() {
+      _updateState = true;
+    });
+
+    setState(() {
+      var sortedList = newState == 1 ? sortIncrease(dataForStudents) : sortDecrease(dataForStudents);
+      _productList = separatorCategoryProducts(sortedList);
+      _sortState = newState;
+      _updateState = false;
+
+    });
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          FilterRow(_isActive),
+        padding: const EdgeInsets.all(10.0),
+        child: Column(children: [
+          FilterRow(_sortState, updateState),
           Container(
             height: 400,
-            child: ProductList(_productList),
+            child: (_updateState) ? ProgressIndicatorExample() : ProductList(_productList),
           ),
-          Divider(),
-          SizedBox(height: 10,),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-            child: Row(
-              children: [
-                Text(
-                  'В вашей покупке',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.blue
-                  ),
-                ),
-              ]
-            ),
+          const Divider(),
+          const SizedBox(
+            height: 10,
+          ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+            child: Row(children: [
+              Text(
+                'В вашей покупке',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+            ]),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: Row(
               children: [
                 Text(
                   '$_productsCount товаров',
                   textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.blue
-                  ),
+                  style: const TextStyle(fontSize: 12),
                 ),
-                Expanded(child: SizedBox(height: 10,)),
+                const Expanded(
+                    child: SizedBox(
+                  height: 10,
+                )),
                 Text(
                   '$_sum руб',
                   textAlign: TextAlign.end,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.blue
-                  ),
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: Row(
               children: [
                 Text(
                   'Cкидка $_discountSize %',
                   textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: AppColors.blue
-                  ),
+                  style: const TextStyle(fontSize: 12),
                 ),
-                Expanded(child: SizedBox(height: 10,)),
+                const Expanded(
+                    child: SizedBox(
+                  height: 10,
+                )),
                 Text(
                   '-$_discount руб',
                   textAlign: TextAlign.end,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.blue
-                  ),
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: Row(
               children: [
-                Text(
+                const Text(
                   'Итого',
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.blue
-                  ),
+                      fontWeight: FontWeight.bold),
                 ),
-                Expanded(child: SizedBox(height: 10,)),
+                const Expanded(
+                    child: SizedBox(
+                  height: 10,
+                )),
                 Text(
                   '$_finalSum руб',
                   textAlign: TextAlign.end,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.blue
-                  ),
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
           ),
-        ]
-      ),
-    );
+        ]),
+      );
   }
 }
-
 
 class FilterRow extends StatelessWidget {
 
-  bool isActive = false;
+  int index;
+  Function function;
 
-  FilterRow(this.isActive);
+  FilterRow(this.index, this.function, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        children: [
-          Text('Cписок покупок',
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppColors.blue),
-          ),
-          SizedBox(
-              width: 200
-          ),
-          Container(
-            height: 32,
-            width: 32,
-            decoration: BoxDecoration(
-              color: AppColors.brightGray,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: badges.Badge(
-              showBadge: isActive,
-              position: badges.BadgePosition.bottomEnd(bottom: 3, end: 3),
-              badgeStyle: badges.BadgeStyle(
-                  badgeColor: AppColors.lime
-              ),
-              child: IconButton(
-                icon: Icon(Icons.sort),
-                padding: EdgeInsets.all(5.0),
-                onPressed: () {
-                  showModalBottomSheet(
+    return Row(children: [
+      const Text(
+        'Cписок покупок',
+        style: TextStyle(
+            fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(width: 200),
+      Container(
+        height: 32,
+        width: 32,
+        decoration: BoxDecoration(
+          color: AppColors.brightGray,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: badges.Badge(
+          showBadge: index > 0 ? true : false,
+          position: badges.BadgePosition.bottomEnd(bottom: 3, end: 3),
+          badgeStyle: const badges.BadgeStyle(badgeColor: AppColors.lime),
+          child: IconButton(
+              icon: const Icon(Icons.sort),
+              padding: const EdgeInsets.all(5.0),
+              onPressed: () {
+                showModalBottomSheet(
                     context: context,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)
-                          )
-                      ),
-                      builder: (BuildContext context) {
-                        return SortTypePanel();
-                    }
-                  );
-              }
-            ),
-          ),
-        )
-      ]
-    );
+                    shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20))),
+                    builder: (BuildContext context) {
+                      return SortTypePanel(index, function);
+                    });
+              }),
+        ),
+      )
+    ]);
   }
 }
 
-class SortTypePanel extends StatefulWidget {
+class SortTypePanel extends StatelessWidget {
 
-  @override
-  State<SortTypePanel> createState() => _SortTypePanel();
-}
+  int index;
+  Function handler;
 
-class _SortTypePanel extends State<SortTypePanel> {
-  int _index = 0 ;
-
-  void changeState(int newIndex) {
-    setState(() {
-      _index = newIndex;
-    });
-  }
+  SortTypePanel(this.index, this.handler, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 350,
+      height: 250,
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Сортировка',
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.blue
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Сортировка',
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   ),
-                ),
-                SizedBox(
-                  width: 180,
-                ),
-                IconButton(
-                    onPressed:() => Navigator.pop(context) ,
-                    icon: Icon(
-                        Icons.close,
-                        color: AppColors.blue)
-                )
-              ],
-            ),
-            SizedBox(height: 20,),
-            CustomLabeledRadio(index: _index, value: 0, label: 'Без сортировки', stateHandler: changeState),
-            CustomLabeledRadio(index: _index, value: 1, label: 'По возрастанию', stateHandler: changeState),
-            CustomLabeledRadio(index: _index, value: 2, label: 'По убыванию', stateHandler: changeState),
-            SizedBox(height: 20,),
-            ElevatedButton(onPressed: () {
-              setState( () {
-                Navigator.pop(context);
-              });
-            },
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.lime,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  fixedSize: Size(350, 48)
-              ), child: Text(
-                'Готово',
-                style: TextStyle(
-                    fontSize: 14
-                ),
+                  const SizedBox(
+                    width: 180,
+                  ),
+                  IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.close))
+                ],
               ),
-            ),
-          ],
-        )
-      ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomLabeledRadio(
+                  index: index,
+                  value: 1,
+                  label: 'По возрастанию',
+                  handler: handler,
+              ),
+              CustomLabeledRadio(
+                  index: index,
+                  value: 2,
+                  label: 'По убыванию',
+                  handler: handler,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          )),
     );
   }
 }
 
+
+
 class CustomFilledRadioIcon extends StatelessWidget {
+
+  const CustomFilledRadioIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return const Stack(
       alignment: Alignment.center,
       children: [
         SizedBox.square(
@@ -481,29 +484,35 @@ class CustomLabeledRadio extends StatelessWidget {
   int value;
   int index;
   String label;
-  Function stateHandler;
+  Function handler;
 
-  CustomLabeledRadio({required this.value, required this.index, required this.label, required this.stateHandler});
+  CustomLabeledRadio(
+      {
+      required this.value,
+      required this.index,
+      required this.label,
+      required this.handler,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        stateHandler(value);
+        index = value;
+        handler(index);
+        Navigator.pop(context);
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20),
-        child: Row (
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Row(
           children: [
-            (value == index) ? CustomFilledRadioIcon(): Icon(Icons.radio_button_off, color: AppColors.gray, size: 20),
-            SizedBox
-              (width: 20),
+            (value == index)
+                ? CustomFilledRadioIcon()
+                : const Icon(Icons.radio_button_off, color: AppColors.gray, size: 20),
+            const SizedBox(width: 20),
             Text(
               label,
-              style: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.blue
-              ),
+              style: const TextStyle(fontSize: 16),
             )
           ],
         ),
@@ -512,15 +521,11 @@ class CustomLabeledRadio extends StatelessWidget {
   }
 }
 
-
 abstract class ListItem {
-
   Widget buildTitle(BuildContext context);
-
 }
 
-class CategoryItem implements ListItem  {
-
+class CategoryItem implements ListItem {
   final String title;
 
   CategoryItem(this.title);
@@ -532,23 +537,18 @@ class CategoryItem implements ListItem  {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-              title,
-              style: TextStyle(
-                color: AppColors.blue,
+          Text(title,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-            )
-          ),
+              )),
         ],
       ),
     );
   }
-
 }
 
 class ProductItem implements ListItem {
-
   final String title;
   final String price;
   final String imageUrl;
@@ -556,18 +556,14 @@ class ProductItem implements ListItem {
   final String? sale;
 
   const ProductItem(
-    this.title,
-    this.price,
-    this.imageUrl,
-    this.amount,
-    this.sale
-  );
-
+      this.title, this.price, this.imageUrl, this.amount, this.sale);
 
   @override
   Widget buildTitle(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0,),
+      padding: const EdgeInsets.symmetric(
+        vertical: 10.0,
+      ),
       child: SizedBox(
         width: 350,
         height: 68,
@@ -575,79 +571,62 @@ class ProductItem implements ListItem {
           children: [
             SizedBox.square(
                 dimension: 68,
-                child: Image.network(
-                    imageUrl,
-                    fit: BoxFit.cover
-                )
-            ),
-            SizedBox(width: 10),
+                child: Image.network(imageUrl, fit: BoxFit.cover)),
+            const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              SizedBox(
-                width: 260,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                          title,
-                          style: TextStyle(
-                              color: AppColors.blue
-                          )
+                SizedBox(
+                  width: 260,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(title),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                  child: SizedBox(height: 10,)
-              ),
-              SizedBox(
-                width: 260,
-                child: Row(
-                  children: [
-                    Text(
-                        switch (amount) {
-                          Grams() => '${amount.value / 1000} кг',
-                          Quantity() => '${amount.value} шт',
-                        }
-                    ),
-                    Expanded(
-                        child: SizedBox(width: 10,)
-                    ),
-                    sale != null ?
-                    SizedBox(
-                      width: 100,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Expanded(child: SizedBox(width: 10,)),
-                          Text(
-                            '${price} руб ',
-                            style: TextStyle(
-                              color: AppColors.lightGray,
-                              decoration: TextDecoration.lineThrough,
+                const Expanded(
+                    child: SizedBox(
+                  height: 10,
+                )),
+                SizedBox(
+                  width: 260,
+                  child: Row(
+                    children: [
+                      Text(switch (amount) {
+                        Grams() => '${amount.value / 1000} кг',
+                        Quantity() => '${amount.value} шт',
+                      }),
+                      const Expanded(
+                          child: SizedBox(
+                        width: 10,
+                      )),
+                      sale != null
+                          ? SizedBox(
+                              width: 100,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const Expanded(
+                                      child: SizedBox(
+                                    width: 10,
+                                  )),
+                                  Text('${price} руб ',
+                                      style: const TextStyle(
+                                        color: AppColors.lightGray,
+                                        decoration: TextDecoration.lineThrough,
+                                      )),
+                                  Text('$sale',
+                                      style: const TextStyle(color: AppColors.red))
+                                ],
+                              ))
+                          : SizedBox(
+                              width: 100,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [Text('$price руб')]),
                             )
-                          ),
-                          Text(
-                          '$sale',
-                          style: TextStyle(
-                              color: AppColors.red
-                          )
-                        )
-                        ],
-                      )
-                    )
-                    :
-                    SizedBox(
-                      width: 100,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text('$price руб')
-                        ]
-                       ),
-                      )
                     ],
                   ),
                 )
@@ -661,7 +640,6 @@ class ProductItem implements ListItem {
 }
 
 class DividerItem implements ListItem {
-
   DividerItem();
 
   @override
@@ -671,7 +649,6 @@ class DividerItem implements ListItem {
 }
 
 class ProductList extends StatelessWidget {
-
   final List productList;
 
   ProductList(this.productList);
@@ -679,22 +656,69 @@ class ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-          itemCount: productList.length,
-          itemBuilder: (BuildContext context, int index) {
-            final item = productList[index];
-            return ListTile(
-              //leading: item.buildIcon(context),
-              title: item.buildTitle(context),
-              //subtitle: item.buildSubtitle(context)
-            );
-          }
-        );
-      }
-    }
+        itemCount: productList.length,
+        itemBuilder: (BuildContext context, int index) {
+          final item = productList[index];
+          return ListTile(
+            //leading: item.buildIcon(context),
+            title: item.buildTitle(context),
+            //subtitle: item.buildSubtitle(context)
+          );
+        });
+  }
+}
 
+class ProgressIndicatorExample extends StatefulWidget {
+  const ProgressIndicatorExample({super.key});
 
-class CustomIcon extends StatelessWidget{
+  @override
+  State<ProgressIndicatorExample> createState() =>
+      _ProgressIndicatorExampleState();
+}
 
+class _ProgressIndicatorExampleState extends State<ProgressIndicatorExample>
+    with TickerProviderStateMixin {
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    controller = AnimationController(
+      /// [AnimationController]s can be created with `vsync: this` because of
+      /// [TickerProviderStateMixin].
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..addListener(() {
+      setState(() {});
+    });
+    controller.repeat(reverse: true);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox.square(
+        dimension: 100,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: CircularProgressIndicator(
+            value: controller.value,
+            semanticsLabel: 'Circular progress indicator',
+            color: AppColors.lime,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomIcon extends StatelessWidget {
   final Icon icon;
   final String text;
   final Color color;
@@ -711,9 +735,7 @@ class CustomIcon extends StatelessWidget{
             icon,
             Text(
               text,
-              style: TextStyle(
-                  color: color
-              ),
+              style: TextStyle(color: color),
             )
           ],
         ),
@@ -722,38 +744,55 @@ class CustomIcon extends StatelessWidget{
   }
 }
 
-
 class CustomNavBar extends StatelessWidget {
-
   CustomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: AppColors.white,
-          border: Border(top: BorderSide(color: AppColors.gray, width: 0.3))
-      ),
+          border: Border(top: BorderSide(color: AppColors.gray, width: 0.3))),
       child: SafeArea(
         child: Row(
-         children: [
-           CustomIcon(icon: Icon(Icons.article_outlined, color: AppColors.gray,), text: 'Каталог', color: AppColors.gray),
-           CustomIcon(icon: Icon(Icons.search, color: AppColors.gray,), text: 'Поиск', color: AppColors.gray),
-           CustomIcon(icon: Icon(Icons.local_mall_outlined, color: AppColors.gray,), text: 'Корзина', color: AppColors.gray),
-           CustomIcon(icon: Icon(Icons.person_outline, color: AppColors.lime,), text: 'Личное', color: AppColors.lime)
-         ],
+          children: [
+            CustomIcon(
+                icon: const Icon(
+                  Icons.article_outlined,
+                  color: AppColors.gray,
+                ),
+                text: 'Каталог',
+                color: AppColors.gray),
+            CustomIcon(
+                icon: const Icon(
+                  Icons.search,
+                  color: AppColors.gray,
+                ),
+                text: 'Поиск',
+                color: AppColors.gray),
+            CustomIcon(
+                icon: const Icon(
+                  Icons.local_mall_outlined,
+                  color: AppColors.gray,
+                ),
+                text: 'Корзина',
+                color: AppColors.gray),
+            CustomIcon(
+                icon: const Icon(
+                  Icons.person_outline,
+                  color: AppColors.lime,
+                ),
+                text: 'Личное',
+                color: AppColors.lime)
+          ],
         ),
       ),
     );
   }
 }
 
-
-
-
 abstract class AppColors {
-  static const blue = Color(0xff252849); // main text
   static const gray = Color(0xff60607b); // data and buttons
   static const lightGray = Color(0xffb5b5b5); // strikethrough
   static const red = Color(0xffff0000); // red text
