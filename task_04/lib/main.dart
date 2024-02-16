@@ -4,8 +4,7 @@ import 'models/list_of_purchase.dart';
 import 'package:intl/intl.dart';
 
 
-//TODO Дописать алгоритмы, виды сортировко переписать положив их в енум
-//TODO Понять в чем проблема у числел с плавающей точкой в передаче данных, возможно оно может по разному распарсится в разныз языках?
+
 
 void main() => runApp(MainApp(dataForStudents));
 
