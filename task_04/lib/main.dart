@@ -4,17 +4,20 @@ import 'models/list_of_purchase.dart';
 import 'package:intl/intl.dart';
 
 
+//TODO Дописать алгоритмы, виды сортировко переписать положив их в енум
+//TODO Понять в чем проблема у числел с плавающей точкой в передаче данных, возможно оно может по разному распарсится в разныз языках?
+
 void main() => runApp(MainApp(dataForStudents));
 
 class MainApp extends StatelessWidget {
   List? productList;
 
-  MainApp(this.productList);
+  MainApp(this.productList, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: (productList != null && productList!.isNotEmpty) ? CheckScreen() : const EmptyState());
+        home: (productList != null && productList!.isNotEmpty) ? const CheckScreen() : const EmptyState());
   }
 }
 
@@ -33,53 +36,60 @@ class EmptyState extends StatelessWidget {
 }
 
 class CheckScreen extends StatelessWidget {
-  CheckScreen();
+  const CheckScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: const CustomAppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {},
+            color: AppColors.lime),
+        title: const Column(
+            children: [
+              Text('Чек № 56',
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold)),
+              Text('24.02.23 в 12:23',
+              style: TextStyle(
+                fontSize: 10,
+                color: AppColors.gray))
+        ]),
+      ),
       body: const CustomBody(),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        unselectedItemColor: AppColors.gray,
+        selectedItemColor: AppColors.lime,
+        showUnselectedLabels: true,
+        currentIndex: 3,
+        items: const [
+        BottomNavigationBarItem(
+            icon: Icon(Icons.article_outlined),
+            label: 'Каталог'
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Поиск'
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag_outlined),
+            label: 'Корзина'
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.perm_identity_sharp),
+            label: 'Личное'
+        ),],
+      )
     );
   }
-}
-
-
-
-
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
-
-  @override
-  Size get preferredSize => const Size.fromHeight(60);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      centerTitle: true,
-      leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-          color: AppColors.lime),
-      title: const Column(children: [
-        Text('Чек № 56',
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold)),
-        Text(
-          '24.02.23 в 12:23',
-          style: TextStyle(fontSize: 10, color: AppColors.gray),
-        )
-      ]),
-    );
-  }
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class CustomBody extends StatefulWidget {
@@ -90,13 +100,13 @@ class CustomBody extends StatefulWidget {
 }
 
 class _CustomBodyState extends State<CustomBody> {
-  late List _productList;
+  late List<Widget> _productList;
   late int _productsCount;
   late String _sum;
   late int _discountSize;
   late String _discount;
   late String _finalSum;
-  late int _sortState;
+  late SortType _sortType;
   late bool _updateState;
 
   @override
@@ -108,7 +118,7 @@ class _CustomBodyState extends State<CustomBody> {
     _discountSize = discountSize(dataForStudents);
     _discount = numberFormatter(discountCounter(dataForStudents));
     _finalSum = numberFormatter(finalSum(dataForStudents));
-    _sortState = 0;
+    _sortType = SortType.notSorted;
     _updateState = false;
   }
 
@@ -120,10 +130,10 @@ class _CustomBodyState extends State<CustomBody> {
     return formattedDigit;
   }
 
-  List separatorCategoryProducts(List nonSeparated) {
+  List<Widget> separatorCategoryProducts(List nonSeparated) {
     Map categoryProducts = {};
 
-    List widgetList = [];
+    List<Widget> widgetList = [];
 
     for (var e in nonSeparated) {
       if (categoryProducts.containsKey(e.category.name)) {
@@ -134,6 +144,7 @@ class _CustomBodyState extends State<CustomBody> {
     }
 
     categoryProducts.keys.forEach((e) {
+
       widgetList.add(CategoryItem(e));
       for (var i in categoryProducts[e]) {
         String? sale;
@@ -145,10 +156,11 @@ class _CustomBodyState extends State<CustomBody> {
 
         String price = numberFormatter((i.price / 100).toInt());
 
-        widgetList.add(ProductItem(i.title, price, i.imageUrl, i.amount, sale));
+        widgetList.add(ProductItem(i.imageUrl,i.title, price, i.amount, sale));
+
       }
 
-      widgetList.add(DividerItem());
+      widgetList.add(const Divider());
     });
 
     return widgetList;
@@ -171,7 +183,6 @@ class _CustomBodyState extends State<CustomBody> {
             ((e.price ~/ 100) * ((100 - e.sale) / 100)).toInt();
       }
     });
-
     return discount.toInt();
   }
 
@@ -184,7 +195,7 @@ class _CustomBodyState extends State<CustomBody> {
         .round();
   }
 
-  List sortIncrease(List list) {
+  List sortPriceAsc(List list) {
 
     List sortedList = List.from(list);
 
@@ -197,14 +208,12 @@ class _CustomBodyState extends State<CustomBody> {
           sortedList[i] = sortedList[j];
           sortedList[j] = temp;
         }
-
       }
     }
-
     return sortedList;
   }
 
-  List sortDecrease(List list) {
+  List sortPriceDesc(List list) {
 
     List sortedList = List.from(list);
 
@@ -217,58 +226,174 @@ class _CustomBodyState extends State<CustomBody> {
           sortedList[i] = sortedList[j];
           sortedList[j] = temp;
         }
-
       }
     }
-
     return sortedList;
   }
 
-  void updateState(int newState) {
+  List <Widget> sortNameAsc(List list) {
+
+    List sortedList = List.from(list);
+
+    for (var i = 0; i < sortedList.length - 1; i++ ) {
+      for (var j = i + 1; j < sortedList.length; j++) {
+        if(sortedList[i].title.compareTo(sortedList[j].title) > 0) {
+          var temp = sortedList[i];
+          sortedList[i] = sortedList[j];
+          sortedList[j] = temp;
+        }
+      }
+    }
+
+    List<Widget> widgetList = [];
+
+    for (var i in sortedList) {
+      String? sale;
+
+      if (i.sale > 0) {
+        sale = numberFormatter(
+            ((i.price ~/ 100) * ((100 - i.sale) / 100)).toInt());
+      }
+
+      String price = numberFormatter((i.price / 100).toInt());
+
+      widgetList.add(ProductItem(i.imageUrl,i.title, price, i.amount, sale));
+
+    }
+
+    return widgetList;
+  }
+
+  List <Widget> sortNameDesc(List list) {
+
+    List sortedList = List.from(list);
+
+    for (var i = 0; i < sortedList.length - 1; i++ ) {
+      for (var j = i + 1; j < sortedList.length; j++) {
+        if(sortedList[i].title.compareTo(sortedList[j].title) < 0) {
+          var temp = sortedList[i];
+          sortedList[i] = sortedList[j];
+          sortedList[j] = temp;
+        }
+      }
+    }
+
+    List<Widget> widgetList = [];
+
+    for (var i in sortedList) {
+      String? sale;
+
+      if (i.sale > 0) {
+        sale = numberFormatter(
+            ((i.price ~/ 100) * ((100 - i.sale) / 100)).toInt());
+      }
+
+      String price = numberFormatter((i.price / 100).toInt());
+
+      widgetList.add(ProductItem(i.imageUrl,i.title, price, i.amount, sale));
+
+    }
+
+    return widgetList;
+  }
+
+  List sortCategoryAsc (List list) {
+
+    List sortedList = List.from(list);
+
+    for (var i = 0; i < sortedList.length - 1; i++ ) {
+      for (var j = i + 1; j < sortedList.length; j++) {
+        if(sortedList[i].category.name.compareTo(sortedList[j].category.name) > 0) {
+          var temp = sortedList[i];
+          sortedList[i] = sortedList[j];
+          sortedList[j] = temp;
+        }
+      }
+    }
+    return sortedList;
+  }
+
+
+  List sortCategoryDesc (List list) {
+
+    List sortedList = List.from(list);
+
+    for (var i = 0; i < sortedList.length - 1; i++ ) {
+      for (var j = i + 1; j < sortedList.length; j++) {
+        if(sortedList[i].category.name.compareTo(sortedList[j].category.name) < 0) {
+          var temp = sortedList[i];
+          sortedList[i] = sortedList[j];
+          sortedList[j] = temp;
+        }
+      }
+    }
+    return sortedList;
+  }
+
+
+
+  void updateState(sortType) {
 
     setState(() {
       _updateState = true;
     });
 
     setState(() {
-      var sortedList = newState == 1 ? sortIncrease(dataForStudents) : sortDecrease(dataForStudents);
-      _productList = separatorCategoryProducts(sortedList);
-      _sortState = newState;
+
+      switch(sortType) {
+        case SortType.notSorted: {
+          _productList = separatorCategoryProducts(dataForStudents);
+        }
+        case SortType.byNameAsc: {
+          _productList = sortNameAsc(dataForStudents);
+        }
+        case SortType.byNameDesc: {
+          _productList = sortNameDesc(dataForStudents);
+        }
+        case SortType.byPriceAsc: {
+          _productList = separatorCategoryProducts(sortPriceAsc(dataForStudents));
+        }
+        case SortType.byPriceDesc: {
+          _productList = separatorCategoryProducts(sortPriceDesc(dataForStudents));
+        }
+        case SortType.byTypeAsc: {
+          _productList = separatorCategoryProducts(sortCategoryAsc(dataForStudents));
+        }
+        case SortType.byTypeDesc: {
+          _productList = separatorCategoryProducts(sortCategoryDesc(dataForStudents));
+        }
+
+
+      }
+      _sortType = sortType;
       _updateState = false;
-
     });
-
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(children: [
-          FilterRow(_sortState, updateState),
-          Container(
-            height: 400,
-            child: (_updateState) ? ProgressIndicatorExample() : ProductList(_productList),
-          ),
+          FilterRow(_sortType, updateState),
+          Expanded(child: (_updateState) ? const ProgressIndicatorExample() : ListView(children: _productList)),
           const Divider(),
-          const SizedBox(
-            height: 10,
-          ),
           const Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-            child: Row(children: [
-              Text(
-                'В вашей покупке',
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-              ),
-            ]),
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              children: [
+                Text(
+                  'В вашей покупке',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+           Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
             child: Row(
               children: [
                 Text(
@@ -276,10 +401,7 @@ class _CustomBodyState extends State<CustomBody> {
                   textAlign: TextAlign.start,
                   style: const TextStyle(fontSize: 12),
                 ),
-                const Expanded(
-                    child: SizedBox(
-                  height: 10,
-                )),
+                const Expanded(child: SizedBox(height: 10,)),
                 Text(
                   '$_sum руб',
                   textAlign: TextAlign.end,
@@ -299,10 +421,7 @@ class _CustomBodyState extends State<CustomBody> {
                   textAlign: TextAlign.start,
                   style: const TextStyle(fontSize: 12),
                 ),
-                const Expanded(
-                    child: SizedBox(
-                  height: 10,
-                )),
+                const Expanded(child: SizedBox(height: 10,)),
                 Text(
                   '-$_discount руб',
                   textAlign: TextAlign.end,
@@ -343,12 +462,14 @@ class _CustomBodyState extends State<CustomBody> {
   }
 }
 
+enum SortType {notSorted, byNameAsc, byNameDesc, byPriceAsc, byPriceDesc, byTypeAsc, byTypeDesc}
+
 class FilterRow extends StatelessWidget {
 
-  int index;
+  SortType sortType;
   Function function;
 
-  FilterRow(this.index, this.function, {super.key});
+  FilterRow(this.sortType, this.function, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -358,7 +479,9 @@ class FilterRow extends StatelessWidget {
         style: TextStyle(
             fontSize: 18, fontWeight: FontWeight.bold),
       ),
-      const SizedBox(width: 200),
+      const Expanded(
+          child: SizedBox(width: 10,)
+      ),
       Container(
         height: 32,
         width: 32,
@@ -367,7 +490,7 @@ class FilterRow extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         child: badges.Badge(
-          showBadge: index > 0 ? true : false,
+          showBadge:  sortType != SortType.notSorted ? true : false,
           position: badges.BadgePosition.bottomEnd(bottom: 3, end: 3),
           badgeStyle: const badges.BadgeStyle(badgeColor: AppColors.lime),
           child: IconButton(
@@ -376,11 +499,12 @@ class FilterRow extends StatelessWidget {
               onPressed: () {
                 showModalBottomSheet(
                     context: context,
+                    isScrollControlled: true,
                     shape: const RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.vertical(top: Radius.circular(20))),
                     builder: (BuildContext context) {
-                      return SortTypePanel(index, function);
+                      return SortTypePanel(sortType, function);
                     });
               }),
         ),
@@ -389,63 +513,151 @@ class FilterRow extends StatelessWidget {
   }
 }
 
+
 class SortTypePanel extends StatelessWidget {
 
-  int index;
+  SortType sortType;
   Function handler;
 
-  SortTypePanel(this.index, this.handler, {super.key});
+  SortTypePanel(this.sortType, this.handler, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250,
-      child: Padding(
-          padding: const EdgeInsets.all(10.0),
+    return Padding(
+        padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
+        child: FractionallySizedBox(
+          heightFactor: 0.8,
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Сортировка',
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(
-                    width: 180,
-                  ),
+                  Expanded(child: SizedBox(width: 10),),
                   IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.close))
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      icon: const Icon(Icons.close),
+                  )
                 ],
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(height: 20,),
+              CustomLabeledRadio(
+                chosenSortType: sortType,
+                itemSortType: SortType.notSorted,
+                label: 'Без сортировки',
+                handler: handler,
+              ),
+              Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'По имени',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: AppColors.gray
+                      ),
+                    )
+                  ],),
               ),
               CustomLabeledRadio(
-                  index: index,
-                  value: 1,
-                  label: 'По возрастанию',
-                  handler: handler,
+                chosenSortType: sortType,
+                itemSortType: SortType.byNameAsc,
+                label: 'По имени от А до Я',
+                handler: handler,
               ),
               CustomLabeledRadio(
-                  index: index,
-                  value: 2,
+                chosenSortType: sortType,
+                itemSortType: SortType.byNameDesc,
+                label: 'По имени от Я до А',
+                handler: handler,
+              ),
+              Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'По цене',
+                      style: TextStyle(
+                          fontSize: 10,
+                          color: AppColors.gray
+                      ),
+                    )
+                  ],),
+              ),
+              CustomLabeledRadio(
+                chosenSortType: sortType,
+                itemSortType: SortType.byPriceAsc,
+                label: 'По возрастанию',
+                handler: handler,
+              ),
+              CustomLabeledRadio(
+                  chosenSortType: sortType,
+                  itemSortType: SortType.byPriceDesc,
                   label: 'По убыванию',
                   handler: handler,
               ),
-              const SizedBox(
-                height: 20,
+              Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'По типу',
+                      style: TextStyle(
+                          fontSize: 10,
+                          color: AppColors.gray
+                      ),
+                    )
+                  ],),
               ),
+              CustomLabeledRadio(
+                chosenSortType: sortType,
+                itemSortType: SortType.byTypeAsc,
+                label: 'По типу от А до Я',
+                handler: handler,
+              ),
+              CustomLabeledRadio(
+                chosenSortType: sortType,
+                itemSortType: SortType.byTypeDesc,
+                label: 'По типу от Я до А',
+                handler: handler,
+              ),
+              const SizedBox(height: 30,),
+              Row(
+                children: [
+                  Expanded(
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style:ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.lime
+                        ),
+                        child: const Text(
+                          'Готово',
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                      )
+                  )
+                ],
+              )
             ],
-          )),
-    );
+          ),
+        ));
   }
 }
-
-
 
 class CustomFilledRadioIcon extends StatelessWidget {
 
@@ -481,33 +693,33 @@ class CustomFilledRadioIcon extends StatelessWidget {
 
 class CustomLabeledRadio extends StatelessWidget {
 
-  int value;
-  int index;
+  SortType chosenSortType;
+  SortType itemSortType;
   String label;
   Function handler;
 
   CustomLabeledRadio(
       {
-      required this.value,
-      required this.index,
-      required this.label,
-      required this.handler,
-      super.key});
+        required this.chosenSortType,
+        required this.itemSortType,
+        required this.label,
+        required this.handler,
+        super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        index = value;
-        handler(index);
+        chosenSortType = itemSortType;
+        handler(chosenSortType);
         Navigator.pop(context);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 15),
         child: Row(
           children: [
-            (value == index)
-                ? CustomFilledRadioIcon()
+            (itemSortType == chosenSortType)
+                ? const CustomFilledRadioIcon()
                 : const Icon(Icons.radio_button_off, color: AppColors.gray, size: 20),
             const SizedBox(width: 20),
             Text(
@@ -521,150 +733,122 @@ class CustomLabeledRadio extends StatelessWidget {
   }
 }
 
-abstract class ListItem {
-  Widget buildTitle(BuildContext context);
-}
 
-class CategoryItem implements ListItem {
+class CategoryItem extends StatelessWidget {
   final String title;
 
-  CategoryItem(this.title);
+  const CategoryItem (this.title,{super.key});
 
   @override
-  Widget buildTitle(BuildContext context) {
+  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              )),
-        ],
-      ),
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        child: Row (
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ))
+          ],
+        ),
     );
   }
 }
 
-class ProductItem implements ListItem {
+class ProductDescription extends StatelessWidget {
   final String title;
   final String price;
+  final Amount amount;
+  final String? sale;
+
+  const ProductDescription(
+    this.title,
+    this.price,
+    this.amount,
+    this.sale, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const Expanded(child: SizedBox(height: 10,)),
+        Row(
+          children: [
+            Text(
+              switch (amount) {
+              Grams() => '${amount.value / 1000} кг',
+              Quantity() => '${amount.value} шт',
+              }
+            ),
+            const Expanded(child: SizedBox(width: 10,)),
+            sale != null
+                ?
+            Text.rich(
+                TextSpan(
+                    text: '',
+                    children: [
+                      TextSpan(text: '$price руб ', style: const TextStyle(color: AppColors.lightGray, decoration: TextDecoration.lineThrough,)),
+                      TextSpan(text: '$sale', style: const TextStyle(color: AppColors.red,)),
+                    ]
+                )
+            )
+                :
+            Text('$price руб')
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class ProductItem extends StatelessWidget {
   final String imageUrl;
+  final String title;
+  final String price;
   final Amount amount;
   final String? sale;
 
   const ProductItem(
-      this.title, this.price, this.imageUrl, this.amount, this.sale);
+      this.imageUrl,
+      this.title,
+      this.price,
+      this.amount,
+      this.sale,
+      {super.key});
 
   @override
-  Widget buildTitle(BuildContext context) {
+  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10.0,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: SizedBox(
-        width: 350,
-        height: 68,
+        height: 70,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox.square(
-                dimension: 68,
-                child: Image.network(imageUrl, fit: BoxFit.cover)),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 260,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(title),
-                      ),
-                    ],
-                  ),
+            SizedBox.square(dimension: 68, child: Image.network(imageUrl, fit: BoxFit.cover)),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                child: ProductDescription(
+                  title,
+                  price,
+                  amount,
+                  sale
                 ),
-                const Expanded(
-                    child: SizedBox(
-                  height: 10,
-                )),
-                SizedBox(
-                  width: 260,
-                  child: Row(
-                    children: [
-                      Text(switch (amount) {
-                        Grams() => '${amount.value / 1000} кг',
-                        Quantity() => '${amount.value} шт',
-                      }),
-                      const Expanded(
-                          child: SizedBox(
-                        width: 10,
-                      )),
-                      sale != null
-                          ? SizedBox(
-                              width: 100,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  const Expanded(
-                                      child: SizedBox(
-                                    width: 10,
-                                  )),
-                                  Text('${price} руб ',
-                                      style: const TextStyle(
-                                        color: AppColors.lightGray,
-                                        decoration: TextDecoration.lineThrough,
-                                      )),
-                                  Text('$sale',
-                                      style: const TextStyle(color: AppColors.red))
-                                ],
-                              ))
-                          : SizedBox(
-                              width: 100,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [Text('$price руб')]),
-                            )
-                    ],
-                  ),
-                )
-              ],
-            )
+              ),
+            ),
           ],
         ),
       ),
     );
-  }
-}
-
-class DividerItem implements ListItem {
-  DividerItem();
-
-  @override
-  Widget buildTitle(BuildContext context) {
-    return const Divider();
-  }
-}
-
-class ProductList extends StatelessWidget {
-  final List productList;
-
-  ProductList(this.productList);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: productList.length,
-        itemBuilder: (BuildContext context, int index) {
-          final item = productList[index];
-          return ListTile(
-            //leading: item.buildIcon(context),
-            title: item.buildTitle(context),
-            //subtitle: item.buildSubtitle(context)
-          );
-        });
   }
 }
 
@@ -683,8 +867,6 @@ class _ProgressIndicatorExampleState extends State<ProgressIndicatorExample>
   @override
   void initState() {
     controller = AnimationController(
-      /// [AnimationController]s can be created with `vsync: this` because of
-      /// [TickerProviderStateMixin].
       vsync: this,
       duration: const Duration(seconds: 5),
     )..addListener(() {
@@ -712,80 +894,6 @@ class _ProgressIndicatorExampleState extends State<ProgressIndicatorExample>
             semanticsLabel: 'Circular progress indicator',
             color: AppColors.lime,
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomIcon extends StatelessWidget {
-  final Icon icon;
-  final String text;
-  final Color color;
-
-  CustomIcon({required this.icon, required this.text, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            icon,
-            Text(
-              text,
-              style: TextStyle(color: color),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CustomNavBar extends StatelessWidget {
-  CustomNavBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      decoration: const BoxDecoration(
-          color: AppColors.white,
-          border: Border(top: BorderSide(color: AppColors.gray, width: 0.3))),
-      child: SafeArea(
-        child: Row(
-          children: [
-            CustomIcon(
-                icon: const Icon(
-                  Icons.article_outlined,
-                  color: AppColors.gray,
-                ),
-                text: 'Каталог',
-                color: AppColors.gray),
-            CustomIcon(
-                icon: const Icon(
-                  Icons.search,
-                  color: AppColors.gray,
-                ),
-                text: 'Поиск',
-                color: AppColors.gray),
-            CustomIcon(
-                icon: const Icon(
-                  Icons.local_mall_outlined,
-                  color: AppColors.gray,
-                ),
-                text: 'Корзина',
-                color: AppColors.gray),
-            CustomIcon(
-                icon: const Icon(
-                  Icons.person_outline,
-                  color: AppColors.lime,
-                ),
-                text: 'Личное',
-                color: AppColors.lime)
-          ],
         ),
       ),
     );
