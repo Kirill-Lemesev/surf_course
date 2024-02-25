@@ -5,8 +5,8 @@ import '../widgets/shopping_list_body.dart';
 
 class ShoppingScreen extends StatelessWidget {
 
-  final checkNumber;
-  final checkDateTime;
+  final String checkNumber;
+  final String checkDateTime;
 
   const ShoppingScreen({required this.checkNumber, required this.checkDateTime, super.key});
 

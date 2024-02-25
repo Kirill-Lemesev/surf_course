@@ -5,10 +5,10 @@ import 'radio_button.dart';
 
 class SortTypeBottomSheet extends StatelessWidget {
 
-  SortType sortType;
-  Function sortFunction;
+  final SortType sortType;
+  final Function sortFunction;
 
-  SortTypeBottomSheet(this.sortType, this.sortFunction, {super.key});
+  const SortTypeBottomSheet(this.sortType, this.sortFunction, {super.key});
 
   @override
   Widget build(BuildContext context) {

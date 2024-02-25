@@ -38,9 +38,9 @@ class _CustomFilledRadioIcon extends StatelessWidget {
 class CustomLabeledRadio extends StatelessWidget {
 
   SortType chosenSortType;
-  SortType itemSortType;
-  String label;
-  Function sortFunction;
+  final SortType itemSortType;
+  final String label;
+  final Function sortFunction;
 
   CustomLabeledRadio(
       {

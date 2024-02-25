@@ -7,10 +7,10 @@ import 'sort_type_bottom_sheet.dart';
 
 class ShoppingListTitle extends StatelessWidget {
 
-  SortType sortType;
-  Function sortFunction;
+  final sortType;
+  final Function sortFunction;
 
-  ShoppingListTitle(this.sortType, this.sortFunction, {super.key});
+  const ShoppingListTitle(this.sortType, this.sortFunction, {super.key});
 
   @override
   Widget build(BuildContext context) {
