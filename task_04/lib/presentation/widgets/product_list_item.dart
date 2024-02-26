@@ -31,8 +31,8 @@ class _ProductDescription extends StatelessWidget {
           children: [
             Text(
                 switch (amount) {
-                  Grams() => '${amount.value / 1000} кг',
-                  Quantity() => '${amount.value} шт',
+                  Grams() => '${amount.value / 1000} ${AppStrings.weight}',
+                  Quantity() => '${amount.value} ${AppStrings.item}',
                 }
             ),
             const Expanded(child: SizedBox(width: 10,)),
@@ -42,13 +42,14 @@ class _ProductDescription extends StatelessWidget {
                 TextSpan(
                     text: '',
                     children: [
-                      TextSpan(text: '$price руб ', style: const TextStyle(color: AppColors.lightGray, decoration: TextDecoration.lineThrough,)),
+                      TextSpan(text: '$price ${AppStrings.rub}', style: const TextStyle(color: AppColors.lightGray, decoration: TextDecoration.lineThrough,)),
+                      const TextSpan(text: ' '),
                       TextSpan(text: sale, style: const TextStyle(color: AppColors.red,)),
                     ]
                 )
             )
                 :
-            Text('$price руб')
+            Text('$price ${AppStrings.rub}')
           ],
         )
       ],

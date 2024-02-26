@@ -14,7 +14,7 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  int _currentIndex = 0;
+  int _currentIndex = 3;
 
   final List<Widget> _screens = [
     const EmptyScreen(),

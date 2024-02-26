@@ -6,7 +6,7 @@ import '../../entity/sort_types.dart';
 import '../../entity/app_data.dart';
 import 'product_list_item.dart';
 import 'category_title_list_item.dart';
-
+import 'load_spinner.dart';
 
 
 final shoppingListRepository = ShoppingListRepository();
@@ -42,36 +42,32 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
 
   }
 
+
   void switchSpinner () {
     setState(() {
-      _loading != _loading;
+      _loading = !_loading;
     });
   }
 
-
-  String numberFormatter(int unformatedDigit) {
-    var formatter = NumberFormat('#,###');
-    var formattedDigit = unformatedDigit >= 1000
-        ? formatter.format(unformatedDigit).replaceAll(',', ' ')
-        : unformatedDigit.toString();
+  String numberFormatter(double unformatedDigit) {
+    var formatter = NumberFormat('#,##0.00');
+    var formattedDigit = formatter.format(unformatedDigit).replaceAll(',', ' ').toString();
     return formattedDigit;
   }
 
-
   String howManyGoods(int numberOfGoods) => Intl.plural(
       numberOfGoods,
-      one: 'товар',
-      other:'товаров'
+      one: AppStrings.oneItem,
+      other:AppStrings.manyItems
   );
-
 
   List<Widget> makeProductItemList (List sortedList) {
 
     List<Widget> widgetList = [];
 
     for (var i in sortedList) {
-      var price = numberFormatter((i.price / 100).toInt());
-      var sale = (i.sale > 0) ? numberFormatter(((i.price ~/ 100) * ((100 - i.sale) / 100)).toInt()) : '0';
+      var price = numberFormatter((i.price / 100));
+      var sale = (i.sale > 0) ? numberFormatter(((i.price ~/ 100) * ((100 - i.sale) / 100))) : '0';
       widgetList.add(ProductItem(i.imageUrl,i.title, price, i.amount, sale));
     }
 
@@ -90,36 +86,35 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
       }
     }
 
-    categoryProducts.keys.forEach((e) {
+    for (var e in categoryProducts.keys) {
       widgetList.add(CategoryTitleItem(e));
       widgetList.addAll(makeProductItemList(categoryProducts[e]));
       widgetList.add(const Divider());
       }
-    );
 
     return widgetList;
   }
 
-  int sumCounter(List productList) {
+  double sumCounter(List productList) {
     double sum = 0;
-    productList.forEach((e) {
+    for (var e in productList) {
       sum += e.price / 100;
-    });
+    }
 
-    return sum.toInt();
+    return sum;
   }
 
-  int discountCounter(List productList) {
+  double discountCounter(List productList) {
     double discount = 0;
-    productList.forEach((e) {
+    for (var e in productList) {
       if (e.sale > 0) {
-        discount += (e.price / 100) - ((e.price ~/ 100) * ((100 - e.sale) / 100)).toInt();
+        discount += (e.price / 100) - ((e.price ~/ 100) * ((100 - e.sale) / 100));
       }
-    });
-    return discount.toInt();
+    }
+    return discount;
   }
 
-  int finalSum(List productList) {
+  double finalSum(List productList) {
     return sumCounter(productList) - discountCounter(productList);
   }
 
@@ -134,8 +129,8 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
 
     for (var i = 0; i < sortedList.length -1; i++ ) {
       for (var j = i + 1; j < sortedList.length; j++) {
-        var iPrice = sortedList[i].sale > 0 ? ((sortedList[i].price ~/ 100) * ((100 - sortedList[i].sale) / 100).toInt()) : sortedList[i].price;
-        var jPrice = sortedList[j].sale > 0 ? ((sortedList[j].price ~/ 100) * ((100 - sortedList[j].sale) / 100).toInt()) : sortedList[j].price;
+        var iPrice = sortedList[i].sale > 0 ? ((sortedList[i].price ~/ 100) * ((100 - sortedList[i].sale) / 100)) : sortedList[i].price;
+        var jPrice = sortedList[j].sale > 0 ? ((sortedList[j].price ~/ 100) * ((100 - sortedList[j].sale) / 100)) : sortedList[j].price;
         if(iPrice > jPrice) {
           var temp = sortedList[i];
           sortedList[i] = sortedList[j];
@@ -152,8 +147,8 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
 
     for (var i = 0; i < sortedList.length -1; i++ ) {
       for (var j = i + 1; j < sortedList.length; j++) {
-        var iPrice = sortedList[i].sale > 0 ? ((sortedList[i].price ~/ 100) * ((100 - sortedList[i].sale) / 100).toInt()) : sortedList[i].price;
-        var jPrice = sortedList[j].sale > 0 ? ((sortedList[j].price ~/ 100) * ((100 - sortedList[j].sale) / 100).toInt()) : sortedList[j].price;
+        var iPrice = sortedList[i].sale > 0 ? ((sortedList[i].price ~/ 100) * ((100 - sortedList[i].sale) / 100)) : sortedList[i].price;
+        var jPrice = sortedList[j].sale > 0 ? ((sortedList[j].price ~/ 100) * ((100 - sortedList[j].sale) / 100)) : sortedList[j].price;
         if(iPrice < jPrice) {
           var temp = sortedList[i];
           sortedList[i] = sortedList[j];
@@ -214,7 +209,6 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
     return sortedList;
   }
 
-
   List sortCategoryDesc (List list) {
 
     List sortedList = List.from(list);
@@ -231,13 +225,10 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
     return sortedList;
   }
 
-
-
   void setSortType(sortType) {
     switchSpinner();
 
     setState(() {
-
 
 
       switch (sortType) {
@@ -297,12 +288,10 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
       }
       _sortType = sortType;
 
-    }
+      }
     );
 
     switchSpinner();
-
-
   }
 
   @override
@@ -311,13 +300,13 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
       padding: const EdgeInsets.all(10.0),
       child: Column(children: [
         ShoppingListTitle(_sortType, setSortType),
-        Expanded(child: _loading? const CircularProgressIndicator(color: AppColors.lime,) : ListView(children: _shoppingList)),
+        Expanded(child: _loading?  const CircularLoader(): ListView(children: _shoppingList)),
         const Divider(),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Row(
             children: [
-              Text('В вашей покупке', textAlign: TextAlign.start, style: AppTextStyle.boldBlack16Style,
+              Text(AppStrings.inYourPurchase, textAlign: TextAlign.start, style: AppTextStyle.boldBlack16Style,
               ),
             ],
           ),
@@ -328,7 +317,7 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
             children: [
               Text('$_productsCount ${howManyGoods(_productsCount)}', textAlign: TextAlign.start, style: AppTextStyle.noColor12Style,),
               const Expanded(child: SizedBox(height: 10,)),
-              Text('$_sum руб', textAlign: TextAlign.end, style: AppTextStyle.boldBlack12Style),
+              Text('$_sum ${AppStrings.rub}', textAlign: TextAlign.end, style: AppTextStyle.boldBlack12Style),
             ],
           ),
         ),
@@ -336,9 +325,9 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Row(
             children: [
-              Text('Cкидка $_discountSize%', textAlign: TextAlign.start, style: AppTextStyle.noColor12Style,),
+              Text('${AppStrings.discount} $_discountSize%', textAlign: TextAlign.start, style: AppTextStyle.noColor12Style,),
               const Expanded(child: SizedBox(height: 10,)),
-              Text('-$_discount руб', textAlign: TextAlign.end, style: AppTextStyle.noColor12Style,)
+              Text('-$_discount ${AppStrings.rub}', textAlign: TextAlign.end, style: AppTextStyle.boldBlack12Style,)
             ],
           ),
         ),
@@ -346,9 +335,9 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Row(
             children: [
-              const Text('Итого', textAlign: TextAlign.start, style: AppTextStyle.boldBlack16Style,),
+              const Text(AppStrings.sumWithDiscount, textAlign: TextAlign.start, style: AppTextStyle.boldBlack16Style,),
               const Expanded(child: SizedBox(height: 10,)),
-              Text('$_finalSum руб', textAlign: TextAlign.end, style: AppTextStyle.boldBlack16Style,)
+              Text('$_finalSum ${AppStrings.rub}', textAlign: TextAlign.end, style: AppTextStyle.boldBlack16Style,)
             ],
           ),
         ),
