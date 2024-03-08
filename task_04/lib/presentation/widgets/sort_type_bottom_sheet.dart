@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../entity/app_data.dart';
-import '../../entity/sort_types.dart';
-import 'radio_button.dart';
+import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
+import 'package:surf_flutter_courses_template/assets/app_colors.dart';
+import 'package:surf_flutter_courses_template/assets/app_strings.dart';
+import 'package:surf_flutter_courses_template/domain/entity/sort_types.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/radio_button.dart';
 
 class SortTypeBottomSheet extends StatelessWidget {
-
   final SortType sortType;
   final Function sortFunction;
 
@@ -20,8 +21,11 @@ class SortTypeBottomSheet extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Text(AppStrings.sortTypeBottomSheetTitle, style: AppTextStyle.boldBlack24Style),
-                  const Expanded(child: SizedBox(width: 10),),
+                  const Text(AppStrings.sortTypeBottomSheetTitle,
+                      style: AppTextStyle.boldBlack24Style),
+                  const Expanded(
+                    child: SizedBox(width: 10),
+                  ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
                     padding: EdgeInsets.zero,
@@ -30,7 +34,9 @@ class SortTypeBottomSheet extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               CustomLabeledRadio(
                 chosenSortType: sortType,
                 itemSortType: SortType.notSorted,
@@ -43,9 +49,12 @@ class SortTypeBottomSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(AppStrings.nameSortTitle, style: AppTextStyle.gray10Style,
+                    Text(
+                      AppStrings.nameSortTitle,
+                      style: AppTextStyle.gray10Style,
                     )
-                  ],),
+                  ],
+                ),
               ),
               CustomLabeledRadio(
                 chosenSortType: sortType,
@@ -65,7 +74,8 @@ class SortTypeBottomSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(AppStrings.priceSortTitle, style: AppTextStyle.gray10Style),
+                    Text(AppStrings.priceSortTitle,
+                        style: AppTextStyle.gray10Style),
                   ],
                 ),
               ),
@@ -87,7 +97,8 @@ class SortTypeBottomSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(AppStrings.categorySortTitle, style: AppTextStyle.gray10Style),
+                    Text(AppStrings.categorySortTitle,
+                        style: AppTextStyle.gray10Style),
                   ],
                 ),
               ),
@@ -103,23 +114,25 @@ class SortTypeBottomSheet extends StatelessWidget {
                 label: AppStrings.byTypeDesc,
                 sortFunction: sortFunction,
               ),
-              const SizedBox(height: 30,),
+              const SizedBox(
+                height: 30,
+              ),
               Row(
                 children: [
                   Expanded(
                       child: ElevatedButton(
-                        onPressed: () => Navigator.pop(context),
-                        style:ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.lime
-                        ),
-                        child: const Text(AppStrings.sortTypeBottomSheetButton, style: AppTextStyle.whiteStyle,),
-                      )
-                  )
+                    onPressed: () => Navigator.pop(context),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.lime),
+                    child: const Text(
+                      AppStrings.sortTypeBottomSheetButton,
+                      style: AppTextStyle.whiteStyle,
+                    ),
+                  ))
                 ],
               )
             ],
           ),
-        )
-      );
+        ));
   }
 }

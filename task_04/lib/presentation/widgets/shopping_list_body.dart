@@ -1,86 +1,115 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:surf_flutter_courses_template/domain/entity/product_entity.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/shopping_list_title.dart';
-import '../../data/repository/shopping_list_repository.dart';
-import '../../entity/sort_types.dart';
-import '../../entity/app_data.dart';
-import 'product_list_item.dart';
-import 'category_title_list_item.dart';
-import 'load_spinner.dart';
-
-
-final shoppingListRepository = ShoppingListRepository();
+import 'package:surf_flutter_courses_template/domain/entity/sort_types.dart';
+import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
+import 'package:surf_flutter_courses_template/assets/app_strings.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/product_list_item.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/category_title_list_item.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/cheque_title.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/cheque_info_row.dart';
+import 'package:surf_flutter_courses_template/assets/app_colors.dart';
 
 class ShoppingListBody extends StatefulWidget {
-  const ShoppingListBody ({super.key});
+  final List shoppingList;
+  const ShoppingListBody({super.key, required this.shoppingList});
 
   @override
-  State<ShoppingListBody > createState() => _ShoppingListBodyState();
+  State<ShoppingListBody> createState() => _ShoppingListBodyState();
 }
 
 class _ShoppingListBodyState extends State<ShoppingListBody> {
-  late List<Widget> _shoppingList;
+  late Future<List<Widget>> _shoppingList;
   late int _productsCount;
   late String _sum;
   late int _discountSize;
   late String _discount;
   late String _finalSum;
   late SortType _sortType;
-  late bool _loading;
 
   @override
   void initState() {
     super.initState();
-    _shoppingList = makeCategoryProductList(shoppingListRepository.shoppingList);
-    _productsCount = shoppingListRepository.shoppingList.length;
-    _sum = numberFormatter(sumCounter(shoppingListRepository.shoppingList));
-    _discountSize = discountSize(shoppingListRepository.shoppingList);
-    _discount = numberFormatter(discountCounter(shoppingListRepository.shoppingList));
-    _finalSum = numberFormatter(finalSum(shoppingListRepository.shoppingList));
     _sortType = SortType.notSorted;
-    _loading = false;
-
+    _shoppingList = makeCategoryProductList(widget.shoppingList, _sortType);
+    _productsCount = widget.shoppingList.length;
+    _sum = numberFormatter(sumCounter(widget.shoppingList));
+    _discountSize = discountSize(widget.shoppingList);
+    _discount = numberFormatter(discountCounter(widget.shoppingList));
+    _finalSum = numberFormatter(finalSum(widget.shoppingList));
   }
 
-
-  void switchSpinner () {
-    setState(() {
-      _loading = !_loading;
-    });
-  }
+  double priceWithDiscount(ProductEntity x) =>
+      x.price.toDouble() - (x.price * x.sale) / 100;
 
   String numberFormatter(double unformatedDigit) {
+    var dividedDigit = unformatedDigit / 100;
     var formatter = NumberFormat('#,##0.00');
-    var formattedDigit = formatter.format(unformatedDigit).replaceAll(',', ' ').toString();
+    var formattedDigit =
+        formatter.format(dividedDigit).replaceAll(',', ' ').toString();
     return formattedDigit;
   }
 
-  String howManyGoods(int numberOfGoods) => Intl.plural(
-      numberOfGoods,
-      one: AppStrings.oneItem,
-      other:AppStrings.manyItems
-  );
+  String howManyGoods(int numberOfGoods) => Intl.plural(numberOfGoods,
+      one: AppStrings.oneItem, other: AppStrings.manyItems);
 
-  List<Widget> makeProductItemList (List sortedList) {
+  int sortByPriceAsc(a, b) {
+    final double aProperty =
+        (a.sale == 0) ? a.price.toDouble() : priceWithDiscount(a);
+    final double bProperty =
+        (b.sale == 0) ? b.price.toDouble() : priceWithDiscount(b);
 
+    if (aProperty < bProperty) {
+      return -1;
+    } else if (aProperty > bProperty) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  int sortByPriceDesc(a, b) {
+    final double aProperty =
+        (a.sale == 0) ? a.price.toDouble() : priceWithDiscount(a);
+    final double bProperty =
+        (b.sale == 0) ? b.price.toDouble() : priceWithDiscount(b);
+
+    if (aProperty > bProperty) {
+      return -1;
+    } else if (aProperty < bProperty) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  List<Widget> makeProductItemList(List sortedList) {
     List<Widget> widgetList = [];
 
     for (var i in sortedList) {
-      var price = numberFormatter((i.price / 100));
-      var sale = (i.sale > 0) ? numberFormatter(((i.price ~/ 100) * ((100 - i.sale) / 100))) : '0';
-      widgetList.add(ProductItem(i.imageUrl,i.title, price, i.amount, sale));
+      var price = numberFormatter(i.price.toDouble());
+      var sale = (i.sale > 0) ? numberFormatter(priceWithDiscount(i)) : '0';
+      widgetList.add(ProductItem(i.imageUrl, i.title, price, i.amount, sale));
     }
 
     return widgetList;
   }
 
-  List<Widget> makeCategoryProductList(List nonSeparated) {
-    Map categoryProducts = {};
+  Future<List<Widget>> makeCategoryProductList(
+      List nonSeparated, SortType sortType) {
+    Map<String, List> categoryProducts = {};
     List<Widget> widgetList = [];
+
+    if (sortType == SortType.byCategoryAsc) {
+      nonSeparated.sort((a, b) => a.category.name.compareTo(b.category.name));
+    } else if (sortType == SortType.byCategoryDesc) {
+      nonSeparated.sort((b, a) => a.category.name.compareTo(b.category.name));
+    }
 
     for (var e in nonSeparated) {
       if (categoryProducts.containsKey(e.category.name)) {
-        categoryProducts[e.category.name].add(e);
+        categoryProducts[e.category.name]?.add(e);
       } else {
         categoryProducts[e.category.name] = [e];
       }
@@ -88,34 +117,32 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
 
     for (var e in categoryProducts.keys) {
       widgetList.add(CategoryTitleItem(e));
-      widgetList.addAll(makeProductItemList(categoryProducts[e]));
-      widgetList.add(const Divider());
+      if (sortType == SortType.byNameAsc) {
+        categoryProducts[e]!.sort((a, b) => a.title.compareTo(b.title));
+      } else if (sortType == SortType.byNameDesc) {
+        categoryProducts[e]!.sort((b, a) => a.title.compareTo(b.title));
+      } else if (sortType == SortType.byPriceAsc) {
+        categoryProducts[e]!.sort(sortByPriceAsc);
+      } else if (sortType == SortType.byPriceDesc) {
+        categoryProducts[e]!.sort(sortByPriceDesc);
       }
+      widgetList.addAll(makeProductItemList(categoryProducts[e]!));
+      widgetList.add(const Divider());
+    }
 
-    return widgetList;
+    return Future.delayed(const Duration(seconds: 5), () => widgetList);
   }
 
   double sumCounter(List productList) {
-    double sum = 0;
-    for (var e in productList) {
-      sum += e.price / 100;
-    }
-
+    double sum =
+        productList.fold(0, (previousValue, e) => previousValue + (e.price));
     return sum;
   }
 
   double discountCounter(List productList) {
-    double discount = 0;
-    for (var e in productList) {
-      if (e.sale > 0) {
-        discount += (e.price / 100) - ((e.price ~/ 100) * ((100 - e.sale) / 100));
-      }
-    }
+    double discount = productList.fold(0,
+        (previousValue, e) => previousValue + e.price - priceWithDiscount(e));
     return discount;
-  }
-
-  double finalSum(List productList) {
-    return sumCounter(productList) - discountCounter(productList);
   }
 
   int discountSize(List productList) {
@@ -123,225 +150,61 @@ class _ShoppingListBodyState extends State<ShoppingListBody> {
         .round();
   }
 
-  List sortPriceAsc(List list) {
-
-    List sortedList = List.from(list);
-
-    for (var i = 0; i < sortedList.length -1; i++ ) {
-      for (var j = i + 1; j < sortedList.length; j++) {
-        var iPrice = sortedList[i].sale > 0 ? ((sortedList[i].price ~/ 100) * ((100 - sortedList[i].sale) / 100)) : sortedList[i].price;
-        var jPrice = sortedList[j].sale > 0 ? ((sortedList[j].price ~/ 100) * ((100 - sortedList[j].sale) / 100)) : sortedList[j].price;
-        if(iPrice > jPrice) {
-          var temp = sortedList[i];
-          sortedList[i] = sortedList[j];
-          sortedList[j] = temp;
-        }
-      }
-    }
-    return sortedList;
+  double finalSum(List productList) {
+    return sumCounter(productList) - discountCounter(productList);
   }
 
-  List sortPriceDesc(List list) {
 
-    List sortedList = List.from(list);
-
-    for (var i = 0; i < sortedList.length -1; i++ ) {
-      for (var j = i + 1; j < sortedList.length; j++) {
-        var iPrice = sortedList[i].sale > 0 ? ((sortedList[i].price ~/ 100) * ((100 - sortedList[i].sale) / 100)) : sortedList[i].price;
-        var jPrice = sortedList[j].sale > 0 ? ((sortedList[j].price ~/ 100) * ((100 - sortedList[j].sale) / 100)) : sortedList[j].price;
-        if(iPrice < jPrice) {
-          var temp = sortedList[i];
-          sortedList[i] = sortedList[j];
-          sortedList[j] = temp;
-        }
-      }
-    }
-    return sortedList;
-  }
-
-  List sortNameAsc(List list) {
-
-    List sortedList = List.from(list);
-
-    for (var i = 0; i < sortedList.length - 1; i++ ) {
-      for (var j = i + 1; j < sortedList.length; j++) {
-        if(sortedList[i].title.compareTo(sortedList[j].title) > 0) {
-          var temp = sortedList[i];
-          sortedList[i] = sortedList[j];
-          sortedList[j] = temp;
-        }
-      }
-    }
-
-    return sortedList;
-  }
-
-  List sortNameDesc(List list) {
-
-    List sortedList = List.from(list);
-
-    for (var i = 0; i < sortedList.length - 1; i++ ) {
-      for (var j = i + 1; j < sortedList.length; j++) {
-        if(sortedList[i].title.compareTo(sortedList[j].title) < 0) {
-          var temp = sortedList[i];
-          sortedList[i] = sortedList[j];
-          sortedList[j] = temp;
-        }
-      }
-    }
-
-    return sortedList;
-  }
-
-  List sortCategoryAsc (List list) {
-
-    List sortedList = List.from(list);
-
-    for (var i = 0; i < sortedList.length - 1; i++ ) {
-      for (var j = i + 1; j < sortedList.length; j++) {
-        if(sortedList[i].category.name.compareTo(sortedList[j].category.name) > 0) {
-          var temp = sortedList[i];
-          sortedList[i] = sortedList[j];
-          sortedList[j] = temp;
-        }
-      }
-    }
-    return sortedList;
-  }
-
-  List sortCategoryDesc (List list) {
-
-    List sortedList = List.from(list);
-
-    for (var i = 0; i < sortedList.length - 1; i++ ) {
-      for (var j = i + 1; j < sortedList.length; j++) {
-        if(sortedList[i].category.name.compareTo(sortedList[j].category.name) < 0) {
-          var temp = sortedList[i];
-          sortedList[i] = sortedList[j];
-          sortedList[j] = temp;
-        }
-      }
-    }
-    return sortedList;
-  }
-
-  void setSortType(sortType) {
-    switchSpinner();
-
-    setState(() {
-
-
-      switch (sortType) {
-        case SortType.notSorted:
-          {
-            _shoppingList = makeCategoryProductList(
-                shoppingListRepository.shoppingList);
-          }
-        case SortType.byNameAsc:
-          {
-            _shoppingList = makeCategoryProductList(
-                sortNameAsc(
-                    shoppingListRepository.shoppingList
-                )
-            );
-          }
-        case SortType.byNameDesc:
-          {
-            _shoppingList = makeCategoryProductList(
-                sortNameDesc(
-                    shoppingListRepository.shoppingList
-                )
-            );
-          }
-        case SortType.byPriceAsc:
-          {
-            _shoppingList = makeCategoryProductList(
-                sortPriceAsc(
-                    shoppingListRepository.shoppingList
-                )
-            );
-          }
-        case SortType.byPriceDesc:
-          {
-            _shoppingList = makeCategoryProductList(
-                sortPriceDesc(
-                    shoppingListRepository.shoppingList
-                )
-            );
-          }
-        case SortType.byCategoryAsc:
-          {
-            _shoppingList = makeCategoryProductList(
-                sortCategoryAsc(
-                    shoppingListRepository.shoppingList
-                )
-            );
-          }
-        case SortType.byCategoryDesc:
-          {
-            _shoppingList = makeCategoryProductList(
-                sortCategoryDesc(
-                    shoppingListRepository.shoppingList
-                )
-            );
-          }
-      }
-      _sortType = sortType;
-
-      }
-    );
-
-    switchSpinner();
-  }
+   void changeSort(sortType) {
+     setState((){
+        _sortType = sortType;
+        _shoppingList = makeCategoryProductList(widget.shoppingList, _sortType);
+      });
+   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Column(children: [
-        ShoppingListTitle(_sortType, setSortType),
-        Expanded(child: _loading?  const CircularLoader(): ListView(children: _shoppingList)),
-        const Divider(),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            children: [
-              Text(AppStrings.inYourPurchase, textAlign: TextAlign.start, style: AppTextStyle.boldBlack16Style,
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            children: [
-              Text('$_productsCount ${howManyGoods(_productsCount)}', textAlign: TextAlign.start, style: AppTextStyle.noColor12Style,),
-              const Expanded(child: SizedBox(height: 10,)),
-              Text('$_sum ${AppStrings.rub}', textAlign: TextAlign.end, style: AppTextStyle.boldBlack12Style),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            children: [
-              Text('${AppStrings.discount} $_discountSize%', textAlign: TextAlign.start, style: AppTextStyle.noColor12Style,),
-              const Expanded(child: SizedBox(height: 10,)),
-              Text('-$_discount ${AppStrings.rub}', textAlign: TextAlign.end, style: AppTextStyle.boldBlack12Style,)
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            children: [
-              const Text(AppStrings.sumWithDiscount, textAlign: TextAlign.start, style: AppTextStyle.boldBlack16Style,),
-              const Expanded(child: SizedBox(height: 10,)),
-              Text('$_finalSum ${AppStrings.rub}', textAlign: TextAlign.end, style: AppTextStyle.boldBlack16Style,)
-            ],
-          ),
-        ),
-      ]),
+      child: Column(
+        children: [
+          ShoppingListTitle(_sortType, changeSort),
+          Expanded(
+              child: FutureBuilder(
+            future: _shoppingList,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(
+                    child: CircularProgressIndicator(color: AppColors.lime));
+              }
+              if (snapshot.hasData) {
+                return ListView(children: snapshot.requireData);
+              } else if (snapshot.hasError) {
+                return const Text('Something went wrong');
+              }
+              return const Center(
+                  child: CircularProgressIndicator(color: AppColors.lime));
+            },
+          )),
+          const Divider(),
+          const ChequeTitle(),
+          ChequeInfoRow(
+              title: '$_productsCount ${howManyGoods(_productsCount)}',
+              titleStyle: AppTextStyle.noColor12Style,
+              amount: _sum,
+              amountStyle: AppTextStyle.boldBlack12Style),
+          ChequeInfoRow(
+              title: '${AppStrings.discount} $_discountSize%',
+              titleStyle: AppTextStyle.noColor12Style,
+              amount: '-$_discount',
+              amountStyle: AppTextStyle.boldBlack12Style),
+          ChequeInfoRow(
+              title: AppStrings.sumWithDiscount,
+              titleStyle: AppTextStyle.boldBlack16Style,
+              amount: _finalSum,
+              amountStyle: AppTextStyle.boldBlack16Style)
+        ],
+      ),
     );
   }
 }

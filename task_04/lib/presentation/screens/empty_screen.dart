@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../entity/app_data.dart';
+import 'package:surf_flutter_courses_template/assets/app_colors.dart';
+import 'package:surf_flutter_courses_template/assets/app_strings.dart';
+import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
 
 class EmptyScreen extends StatelessWidget {
   const EmptyScreen({super.key});
@@ -9,8 +11,8 @@ class EmptyScreen extends StatelessWidget {
     return const ColoredBox(
       color: AppColors.white,
       child: Center(
-          child: Text(AppStrings.emptyText, style: AppTextStyle.noColor18Style)
-      ),
+          child:
+              Text(AppStrings.emptyText, style: AppTextStyle.noColor18Style)),
     );
   }
 }

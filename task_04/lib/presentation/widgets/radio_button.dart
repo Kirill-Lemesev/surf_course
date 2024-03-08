@@ -1,10 +1,50 @@
 import 'package:flutter/material.dart';
-import '../../entity/sort_types.dart';
-import '../../entity/app_data.dart';
+import 'package:surf_flutter_courses_template/domain/entity/sort_types.dart';
+import 'package:surf_flutter_courses_template/assets/app_colors.dart';
+import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
 
+class CustomLabeledRadio extends StatelessWidget {
+  SortType chosenSortType;
+  final SortType itemSortType;
+  final String label;
+  final Function sortFunction;
+
+  CustomLabeledRadio(
+      {required this.chosenSortType,
+      required this.itemSortType,
+      required this.label,
+      required this.sortFunction,
+      super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        chosenSortType = itemSortType;
+        sortFunction(chosenSortType);
+        Navigator.pop(context);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        child: Row(
+          children: [
+            (itemSortType == chosenSortType)
+                ? const _CustomFilledRadioIcon()
+                : const Icon(Icons.radio_button_off,
+                    color: AppColors.gray, size: 20),
+            const SizedBox(width: 20),
+            Text(
+              label,
+              style: AppTextStyle.noColor16Style,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class _CustomFilledRadioIcon extends StatelessWidget {
-
   const _CustomFilledRadioIcon();
 
   @override
@@ -31,46 +71,6 @@ class _CustomFilledRadioIcon extends StatelessWidget {
           ),
         )
       ],
-    );
-  }
-}
-
-class CustomLabeledRadio extends StatelessWidget {
-
-  SortType chosenSortType;
-  final SortType itemSortType;
-  final String label;
-  final Function sortFunction;
-
-  CustomLabeledRadio(
-      {
-        required this.chosenSortType,
-        required this.itemSortType,
-        required this.label,
-        required this.sortFunction,
-        super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        chosenSortType = itemSortType;
-        sortFunction(chosenSortType);
-        Navigator.pop(context);
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15),
-        child: Row(
-          children: [
-            (itemSortType == chosenSortType)
-                ? const _CustomFilledRadioIcon()
-                : const Icon(Icons.radio_button_off, color: AppColors.gray, size: 20),
-            const SizedBox(width: 20),
-            Text(label, style: AppTextStyle.noColor16Style,
-            )
-          ],
-        ),
-      ),
     );
   }
 }

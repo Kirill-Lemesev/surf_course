@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:surf_flutter_courses_template/entity/app_data.dart';
-import '../../entity/sort_types.dart';
+import 'package:surf_flutter_courses_template/assets/app_colors.dart';
+import 'package:surf_flutter_courses_template/assets/app_strings.dart';
+import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
+import 'package:surf_flutter_courses_template/domain/entity/sort_types.dart';
 import 'sort_type_bottom_sheet.dart';
 
-
 class ShoppingListTitle extends StatelessWidget {
-
   final SortType sortType;
   final Function sortFunction;
 
@@ -15,11 +15,14 @@ class ShoppingListTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      const Text(AppStrings.shoppingListTitle, style: AppTextStyle.boldBlack18Style,
+      const Text(
+        AppStrings.shoppingListTitle,
+        style: AppTextStyle.boldBlack18Style,
       ),
       const Expanded(
-          child: SizedBox(width: 10,)
-      ),
+          child: SizedBox(
+        width: 10,
+      )),
       Container(
         height: 32,
         width: 32,
@@ -28,7 +31,7 @@ class ShoppingListTitle extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         child: badges.Badge(
-          showBadge:  sortType != SortType.notSorted ? true : false,
+          showBadge: sortType != SortType.notSorted ? true : false,
           position: badges.BadgePosition.bottomEnd(bottom: 3, end: 3),
           badgeStyle: const badges.BadgeStyle(badgeColor: AppColors.lime),
           child: IconButton(
@@ -40,14 +43,13 @@ class ShoppingListTitle extends StatelessWidget {
                     isScrollControlled: true,
                     shape: const RoundedRectangleBorder(
                         borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(20))),
+                            BorderRadius.vertical(top: Radius.circular(20))),
                     builder: (BuildContext context) {
                       return SortTypeBottomSheet(sortType, sortFunction);
                     });
               }),
         ),
       )
-    ]
-    );
+    ]);
   }
 }
