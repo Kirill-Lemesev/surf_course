@@ -8,9 +8,11 @@ class ColorItemsList {
 
   ColorItemsList() : _json = jsonDecode(colors);
 
-  List<ColorItem> getColorItemsList () {
+  List<ColorItem> getColorItemsList() {
     if (_json case {'colors': List colorsJson}) {
-      return [for (final colorJson in colorsJson) ColorItem.fromJson(colorJson)];
+      return [
+        for (final colorJson in colorsJson) ColorItem.fromJson(colorJson)
+      ];
     } else {
       throw const FormatException('Unexpected JSON format');
     }
