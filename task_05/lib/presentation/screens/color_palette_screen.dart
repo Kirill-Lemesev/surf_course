@@ -20,7 +20,7 @@ class _ColorPaletteScreenState extends State<ColorPaletteScreen> {
     final List<PaletteItem> paletteItems = [];
     for (var i in colorItemsList) {
       if (i.hexColor != null) {
-        paletteItems.add(PaletteItem(name: i.name, hexColor: i.hexColor!));
+        paletteItems.add(PaletteItem(title: i.name, hexColor: i.hexColor!));
       }
     }
     return Future.delayed(const Duration(seconds: 3), () => paletteItems);

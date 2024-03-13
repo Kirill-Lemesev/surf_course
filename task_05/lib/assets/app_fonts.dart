@@ -9,8 +9,13 @@ abstract class AppFonts {
     decoration: TextDecoration.none,
   );
 
+  static const default16Style = TextStyle(
+    fontSize: 16,
+    color: AppColors.black,
+    decoration: TextDecoration.none,
+  );
+
   static const default10Style = TextStyle(
-    fontWeight: FontWeight.bold,
     fontSize: 10,
     color: AppColors.black,
     decoration: TextDecoration.none,

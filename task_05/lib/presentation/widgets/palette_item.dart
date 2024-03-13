@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
 import 'package:surf_flutter_courses_template/assets/app_colors.dart';
+import 'package:surf_flutter_courses_template/presentation/screens/color_screen.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class PaletteItem extends StatelessWidget {
-  final String name;
+  final String title;
   final String hexColor;
-  const PaletteItem({super.key, required this.name, required this.hexColor});
+
+  const PaletteItem({super.key, required this.title, required this.hexColor});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,14 @@ class PaletteItem extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: GestureDetector(
         onTap: () {
-          print('Tap');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ColorScreen(
+                      title: title,
+                      hexColor: hexColor,
+                    )),
+          );
         },
         onLongPress: () {
           print('Press');
@@ -24,9 +34,7 @@ class PaletteItem extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    color: Color(
-                        int.parse(hexColor.substring(1, 7), radix: 16) +
-                            0xFF000000)),
+                    color: HexColor(hexColor)),
               ),
             ),
             const SizedBox(
@@ -35,19 +43,16 @@ class PaletteItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(name, style: AppFonts.default10Style),
+                Text(title, style: AppFonts.default10Style),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(hexColor, style: AppFonts.default10Style),
-                const SizedBox(width: 5,),
-                const Icon(
-                  Icons.copy,
-                  color: AppColors.grey,
-                  size: 10,
-                )
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             )
           ],
