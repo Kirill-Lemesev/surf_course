@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:surf_flutter_courses_template/presentation/screens/color_palette_screen.dart';
+import 'package:surf_flutter_courses_template/models/colors.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+void main() => runApp(const ColorPaletteApp());
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class ColorPaletteApp extends StatelessWidget {
+  const ColorPaletteApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.white)),
+        home: ColorPaletteScreen(colorsList: ColorItemsList()));
   }
 }
