@@ -34,9 +34,9 @@ class _ColorPaletteScreenState extends State<ColorPaletteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.white,
-      child: FutureBuilder(
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      body: FutureBuilder(
           future: _colorsList,
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
@@ -47,7 +47,7 @@ class _ColorPaletteScreenState extends State<ColorPaletteScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
                   children: [
-                    const SafeArea(child: SizedBox(height: 30)),
+                    const SafeArea(child: SizedBox(height: 20)),
                     const ColorPaletteTitle(),
                     Expanded(
                       child: GridView.count(
