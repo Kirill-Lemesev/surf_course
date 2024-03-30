@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+import 'package:surf_flutter_courses_template/assets/app_strings.dart';
+import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
+
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const Icon(Icons.arrow_back_outlined),
+          title: Text(
+            AppStrings.profile,
+            style: AppFonts.bold18Style,
+          ),
+          centerTitle: true,
+          actions: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: Text(
+                  AppStrings.save,
+                  style: AppFonts.simple16Style,
+                ),
+              ),
+            ),
+          ],
+          elevation: 0,
+        ),
+      ),
+    );
+  }
+}
