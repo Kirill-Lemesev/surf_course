@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:surf_flutter_courses_template/assets/app_strings.dart';
 import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/user_icon.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -33,6 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
           elevation: 0,
+        ),
+        body: const Column(
+          children: [UserIcon()],
         ),
       ),
     );
