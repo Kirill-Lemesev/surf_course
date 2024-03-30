@@ -9,6 +9,11 @@ abstract class AppStrings {
   //FormTitle
   static String myMedals = 'Мои награды';
 
+  //Medals
+  static String goldMedal = '🥇';
+  static String silverMedal = '🥈';
+  static String bronzeMedal = '🥉';
+
   //Form
   static String name = 'Имя';
   static String email = 'Email';
@@ -16,8 +21,6 @@ abstract class AppStrings {
   static String team = 'Дата рождения';
   static String position = 'Дата рождения';
   static String logOut = 'Log out';
-
-
 
   //Person info
   static String personName = 'Маркус Хассельборг';
