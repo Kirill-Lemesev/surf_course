@@ -4,6 +4,7 @@ import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/user_icon.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/medals.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/form_item.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/log_out_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -52,6 +53,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             FormItem(itemName: AppStrings.team, itemData: AppStrings.personTeam, showButton: true,),
             FormItem(itemName: AppStrings.position, itemData: AppStrings.personPosition, showButton: true,),
             FormItem(itemName: AppStrings.formButtonText, itemData: AppStrings.systemTheme, showButton: true,),
+            const Expanded(child: SizedBox(height: 10,)),
+            const LogOutButton()
           ],
         ),
       ),
