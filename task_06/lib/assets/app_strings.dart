@@ -18,8 +18,8 @@ abstract class AppStrings {
   static String name = 'Имя';
   static String email = 'Email';
   static String birthDate = 'Дата рождения';
-  static String team = 'Дата рождения';
-  static String position = 'Дата рождения';
+  static String team = 'Команда';
+  static String position = 'Позиция';
   static String logOut = 'Log out';
 
   //Person info
