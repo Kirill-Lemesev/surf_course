@@ -74,10 +74,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: aeb0b80a8b3709709c9cc496cdc027c5b3216796bc0af0ce1007eaf24464fd4c
+      sha256: a25a15ebbdfc33ab1cd26c63a6ee519df92338a9c10f122adda92938253bef04
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -120,6 +120,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -168,14 +176,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  provider:
+    dependency: "direct main"
+    description:
+      name: provider
+      sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.2"
   shared_preferences:
     dependency: "direct main"
     description:
       name: shared_preferences
-      sha256: "81429e4481e1ccfb51ede496e916348668fd0921627779233bd24cc3ff6abd02"
+      sha256: d3bbe5553a986e83980916ded2f0b435ef2e1893dfaa29d5a7a790d0eca12180
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.2"
+    version: "2.2.3"
   shared_preferences_android:
     dependency: transitive
     description:
@@ -311,4 +327,4 @@ packages:
     version: "1.0.4"
 sdks:
   dart: ">=3.1.0 <4.0.0"
-  flutter: ">=3.10.3"
+  flutter: ">=3.13.0"

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surf_flutter_courses_template/assets/app_images.dart';
 import 'package:surf_flutter_courses_template/assets/app_strings.dart';
-import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
 
 class UserIcon extends StatelessWidget {
   const UserIcon({super.key});
@@ -26,7 +25,7 @@ class UserIcon extends StatelessWidget {
                 Center(
                   child: Text(
                     AppStrings.edit,
-                    style: AppFonts.noStyle16,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 )
               ],

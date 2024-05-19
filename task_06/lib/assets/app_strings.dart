@@ -30,10 +30,10 @@ abstract class AppStrings {
   static String personPosition = 'Скип';
 
   //Theme
-  static String formButtonText = 'Тема оформления';
-  static String systemTheme = 'Системная';
-  static String brightTheme = 'Светлая';
-  static String darkTheme = 'Темная';
+  static String themeType = 'Тема оформления';
+  static const String systemTheme = 'Системная';
+  static const String brightTheme = 'Светлая';
+  static const String darkTheme = 'Темная';
 
   //BottomSheet
   static String colorTheme = 'Цветовая схема';

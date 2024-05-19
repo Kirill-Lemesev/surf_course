@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
+
 import 'package:surf_flutter_courses_template/assets/app_strings.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/medal.dart';
 
 class MedalRow extends StatelessWidget {
   const MedalRow({super.key});
@@ -15,38 +16,23 @@ class MedalRow extends StatelessWidget {
               child: SizedBox(
             height: 10,
           )),
-          Text(
-            AppStrings.goldMedal,
-            style: AppFonts.noStyle32,
-          ),
+          Medal(medal: AppStrings.goldMedal),
           const SizedBox(
             width: 10,
           ),
-          Text(
-            AppStrings.goldMedal,
-            style: AppFonts.noStyle32,
-          ),
+          Medal(medal: AppStrings.goldMedal),
           const SizedBox(
             width: 10,
           ),
-          Text(
-            AppStrings.bronzeMedal,
-            style: AppFonts.noStyle32,
-          ),
+          Medal(medal: AppStrings.bronzeMedal),
           const SizedBox(
             width: 10,
           ),
-          Text(
-            AppStrings.silverMedal,
-            style: AppFonts.noStyle32,
-          ),
+          Medal(medal: AppStrings.silverMedal),
           const SizedBox(
             width: 10,
           ),
-          Text(
-            AppStrings.bronzeMedal,
-            style: AppFonts.noStyle32,
-          ),
+          Medal(medal: AppStrings.bronzeMedal),
           const Expanded(
               child: SizedBox(
             height: 10,
