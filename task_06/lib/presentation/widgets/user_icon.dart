@@ -25,7 +25,7 @@ class UserIcon extends StatelessWidget {
                 Center(
                   child: Text(
                     AppStrings.edit,
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                 )
               ],

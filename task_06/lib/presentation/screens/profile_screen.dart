@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:surf_flutter_courses_template/assets/app_strings.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/user_icon.dart';
-import 'package:surf_flutter_courses_template/presentation/widgets/medals.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/medals_row.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/form_item.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/log_out_button.dart';
 import 'package:surf_flutter_courses_template/presentation/screens/theme_bottom_sheet.dart';
@@ -22,10 +22,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: Icon(Icons.arrow_back,
-              color: Theme.of(context).iconTheme.color,
-              size: Theme.of(context).iconTheme.size),
+              color: Theme.of(context).appBarTheme.iconTheme?.color,
+              size: Theme.of(context).appBarTheme.iconTheme?.size),
           title: Text(AppStrings.profile,
-              style: Theme.of(context).textTheme.titleMedium),
+              style: Theme.of(context).appBarTheme.titleTextStyle),
           centerTitle: true,
           actions: [
             Center(
@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.only(right: 15),
                 child: Text(
                   AppStrings.save,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).appBarTheme.toolbarTextStyle,
                 ),
               ),
             ),
@@ -45,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const UserIcon(),
             Text(
               AppStrings.myMedals,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.labelMedium,
             ),
             const MedalRow(),
             const SizedBox(
