@@ -1,5 +1,5 @@
-class Image {
+class MyImage {
   final String url;
 
-  Image({required this.url});
+  MyImage({required this.url});
 }

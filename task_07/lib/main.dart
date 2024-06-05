@@ -1,42 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:surf_flutter_courses_template/presentation/screens/grid_screen.dart';
 
 void main() {
-  runApp(const ExampleApp());
+  runApp(const PostogramApp());
 }
 
-class ExampleApp extends StatelessWidget {
-  static const _rainbowColors = [
-    Colors.red,
-    Colors.orange,
-    Colors.yellow,
-    Colors.green,
-    Colors.cyan,
-    Colors.blue,
-    Colors.purple,
-  ];
-  const ExampleApp({super.key});
+class PostogramApp extends StatelessWidget {
+  const PostogramApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: PageView(
-          children: _rainbowColors.map((e) => _PageViewItem(color: e)).toList(),
-        ),
-      ),
+    return const MaterialApp(
+      home: GridScreen(),
     );
-  }
-}
-
-class _PageViewItem extends StatelessWidget {
-  final Color color;
-  const _PageViewItem({
-    required this.color,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.expand(child: ColoredBox(color: color));
   }
 }
