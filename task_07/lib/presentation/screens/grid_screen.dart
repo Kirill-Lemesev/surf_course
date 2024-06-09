@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surf_flutter_courses_template/assets/app_colors.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/grid _image.dart';
-
 import 'package:surf_flutter_courses_template/data/mock_data.dart';
 
 class GridScreen extends StatefulWidget {
@@ -30,6 +29,7 @@ class _GridScreenState extends State<GridScreen> {
         image: i.url,
         imageID: imageID,
         imagesCount: imagesCount,
+        imagesList: items,
       ));
     }
     return Future.delayed(const Duration(seconds: 5), () => imageList);
