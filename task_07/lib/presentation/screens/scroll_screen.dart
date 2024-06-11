@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:surf_flutter_courses_template/assets/app_fonts.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/scroll_image.dart';
+import 'dart:ui' as ui;
 
 class ScrollScreen extends StatefulWidget {
   final int imageID;
@@ -26,6 +27,16 @@ class _ScrollScreenState extends State<ScrollScreen> {
     viewportFraction: 0.7,
   );
 
+  void _onPageChanged() {
+    final prevPage = _currentPage;
+
+    _currentPage = _pageController.page?.round() ?? _currentPage;
+
+    _imageId = _currentPage + 1;
+
+    if (prevPage != _currentPage) setState(() {});
+  }
+
   @override
   void initState() {
     _pageController.addListener(_onPageChanged);
@@ -38,17 +49,6 @@ class _ScrollScreenState extends State<ScrollScreen> {
       ..removeListener(_onPageChanged)
       ..dispose();
     super.dispose();
-  }
-
-  void _onPageChanged() {
-    final prevPage = _currentPage;
-
-    _currentPage = _pageController.page?.round() ?? _currentPage;
-    print(_currentPage);
-
-    _imageId = _currentPage + 1;
-
-    if (prevPage != _currentPage) setState(() {});
   }
 
   @override
@@ -75,23 +75,42 @@ class _ScrollScreenState extends State<ScrollScreen> {
           ],
         ),
         body: PageView.builder(
-          controller: _pageController,
-          itemCount: widget.imagesCount,
-          itemBuilder: (_, i) => Center(
-            child: AnimatedScale(
-              duration: const Duration(milliseconds: 300),
-              scale: _currentPage == i ? 1 : 0.8,
-              child: GestureDetector(
-                onTap: () => _pageController.animateToPage(
-                  i,
-                  duration: _defaultAnimDuration,
-                  curve: Curves.easeIn,
-                ),
-                child: ScrollImage(url: widget.imagesList[i].url, blur: i - 1 != _currentPage,),
-              ),
-            ),
-          ),
-        ),
+            controller: _pageController,
+            itemCount: widget.imagesCount,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            itemBuilder: (_, i) => Center(
+                  child: AnimatedScale(
+                    key: ValueKey(_currentPage),
+                    duration: const Duration(milliseconds: 300),
+                    scale: _currentPage == i ? 1 : 0.8,
+                    child: GestureDetector(
+                      onTap: () => _pageController.animateToPage(
+                        i,
+                        duration: _defaultAnimDuration,
+                        curve: Curves.easeIn,
+                      ),
+                      child: Stack(
+                        children: [
+                          ScrollImage(url: widget.imagesList[i].url),
+                          if (i != _currentPage.round())
+                            ClipRect(
+                              child: BackdropFilter(
+                                filter: ui.ImageFilter.blur(
+                                    sigmaX: 5.0, sigmaY: 5.0),
+                                child: Container(
+                                  color: Colors.black.withOpacity(0),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )),
       ),
     );
   }
