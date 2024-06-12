@@ -8,31 +8,20 @@ import 'package:surf_flutter_courses_template/presentation/widgets/log_out_butto
 import 'package:surf_flutter_courses_template/presentation/screens/theme_bottom_sheet.dart';
 import 'package:surf_flutter_courses_template/domain/theme.dart';
 
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           leading: Icon(Icons.arrow_back,
-              color: Theme
-                  .of(context)
-                  .appBarTheme
-                  .iconTheme
-                  ?.color,
-              size: Theme
-                  .of(context)
-                  .appBarTheme
-                  .iconTheme
-                  ?.size),
+              color: theme.appBarTheme.iconTheme?.color,
+              size: theme.appBarTheme.iconTheme?.size),
           title: Text(AppStrings.profile,
-              style: Theme
-                  .of(context)
-                  .appBarTheme
-                  .titleTextStyle),
+              style: theme.appBarTheme.titleTextStyle),
           centerTitle: true,
           actions: [
             Center(
@@ -40,10 +29,7 @@ class ProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15),
                 child: Text(
                   AppStrings.save,
-                  style: Theme
-                      .of(context)
-                      .appBarTheme
-                      .toolbarTextStyle,
+                  style: theme.appBarTheme.toolbarTextStyle,
                 ),
               ),
             ),
@@ -55,10 +41,7 @@ class ProfileScreen extends StatelessWidget {
             const UserIcon(),
             Text(
               AppStrings.myMedals,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .labelMedium,
+              style: theme.textTheme.labelMedium,
             ),
             const MedalRow(),
             const SizedBox(
@@ -91,19 +74,15 @@ class ProfileScreen extends StatelessWidget {
             ),
             FormItem(
               itemName: AppStrings.themeType,
-              itemData: context
-                  .watch<AppTheme>()
-                  .themeName,
+              itemData: context.watch<AppTheme>().themeName,
               showButton: true,
               modalBottomSheet:
-              ThemeBottomSheet(theme: context
-                  .watch<AppTheme>()
-                  .themeName),
+                  ThemeBottomSheet(theme: context.watch<AppTheme>().themeName),
             ),
             const Expanded(
                 child: SizedBox(
-                  height: 10,
-                )),
+              height: 10,
+            )),
             const LogOutButton()
           ],
         ),
