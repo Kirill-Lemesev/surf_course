@@ -6,26 +6,14 @@ import 'package:surf_flutter_courses_template/presentation/widgets/done_button.d
 import 'package:surf_flutter_courses_template/presentation/widgets/bright_scheme_button.dart';
 import 'package:surf_flutter_courses_template/presentation/widgets/dark_scheme_button.dart';
 
-class ThemeBottomSheet extends StatefulWidget {
-  final String theme;
-
-  const ThemeBottomSheet({super.key, required this.theme});
-
-  @override
-  State<ThemeBottomSheet> createState() => _ThemeBottomSheetState();
-}
-
-class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
-  late String _theme;
-
-  @override
-  void initState() {
-    _theme = widget.theme;
-    super.initState();
-  }
+class ThemeBottomSheet extends StatelessWidget {
+  const ThemeBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final themeName = context.watch<AppTheme>().themeName;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Wrap(
@@ -36,7 +24,7 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
               children: [
                 Text(
                   AppStrings.themeType,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: theme.textTheme.titleLarge,
                 ),
                 const Expanded(
                   child: SizedBox(
@@ -48,7 +36,7 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
                       Navigator.pop(context);
                     },
                     icon: const Icon(Icons.close),
-                    color: Theme.of(context).iconTheme.color)
+                    color: theme.iconTheme.color)
               ],
             ),
           ),
@@ -56,25 +44,19 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
               title: const Text(AppStrings.systemTheme),
               leading: Radio(
                 value: AppStrings.systemTheme,
-                groupValue: _theme,
-                onChanged: (String? value) {
-                  setState(() {
-                    _theme = value!;
-                    context.read<AppTheme>().setAppTheme(value);
-                  });
+                groupValue: themeName,
+                onChanged: (value) {
+                  context.read<AppTheme>().setAppTheme(value!);
                 },
               )),
-          if (_theme == AppStrings.brightTheme) ...[
+          if (themeName == AppStrings.brightTheme) ...[
             ListTile(
                 title: const Text(AppStrings.brightTheme),
                 leading: Radio(
                   value: AppStrings.brightTheme,
-                  groupValue: _theme,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _theme = value!;
-                      context.read<AppTheme>().setAppTheme(value);
-                    });
+                  groupValue: themeName,
+                  onChanged: (value) {
+                    context.read<AppTheme>().setAppTheme(value!);
                   },
                 )),
             Padding(
@@ -84,7 +66,7 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
                   Text(
                     AppStrings.colorTheme,
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: theme.textTheme.labelMedium,
                   ),
                 ],
               ),
@@ -123,25 +105,19 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
                 title: const Text(AppStrings.brightTheme),
                 leading: Radio(
                   value: AppStrings.brightTheme,
-                  groupValue: _theme,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _theme = value!;
-                      context.read<AppTheme>().setAppTheme(value);
-                    });
+                  groupValue: themeName,
+                  onChanged: (value) {
+                    context.read<AppTheme>().setAppTheme(value!);
                   },
                 )),
-          if (_theme == AppStrings.darkTheme) ...[
+          if (themeName == AppStrings.darkTheme) ...[
             ListTile(
                 title: const Text(AppStrings.darkTheme),
                 leading: Radio(
                   value: AppStrings.darkTheme,
-                  groupValue: _theme,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _theme = value!;
-                      context.read<AppTheme>().setAppTheme(value);
-                    });
+                  groupValue: themeName,
+                  onChanged: (value) {
+                    context.read<AppTheme>().setAppTheme(value!);
                   },
                 )),
             Padding(
@@ -151,7 +127,7 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
                   Text(
                     AppStrings.colorTheme,
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: theme.textTheme.labelMedium,
                   ),
                 ],
               ),
@@ -190,12 +166,9 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
                 title: const Text(AppStrings.darkTheme),
                 leading: Radio(
                   value: AppStrings.darkTheme,
-                  groupValue: _theme,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _theme = value!;
-                      context.read<AppTheme>().setAppTheme(value);
-                    });
+                  groupValue: themeName,
+                  onChanged: (value) {
+                    context.read<AppTheme>().setAppTheme(value!);
                   },
                 )),
           const Padding(

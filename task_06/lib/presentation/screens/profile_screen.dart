@@ -20,8 +20,8 @@ class ProfileScreen extends StatelessWidget {
           leading: Icon(Icons.arrow_back,
               color: theme.appBarTheme.iconTheme?.color,
               size: theme.appBarTheme.iconTheme?.size),
-          title: Text(AppStrings.profile,
-              style: theme.appBarTheme.titleTextStyle),
+          title:
+              Text(AppStrings.profile, style: theme.appBarTheme.titleTextStyle),
           centerTitle: true,
           actions: [
             Center(
@@ -76,8 +76,7 @@ class ProfileScreen extends StatelessWidget {
               itemName: AppStrings.themeType,
               itemData: context.watch<AppTheme>().themeName,
               showButton: true,
-              modalBottomSheet:
-                  ThemeBottomSheet(theme: context.watch<AppTheme>().themeName),
+              modalBottomSheet: const ThemeBottomSheet(),
             ),
             const Expanded(
                 child: SizedBox(
