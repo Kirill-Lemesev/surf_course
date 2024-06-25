@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b2ad2c18-89a6-42b5-a31c-d42952b1498f" name="Changes" comment="fixes" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="photo_gallery" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Kirill-Lemesev&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="57ed2e41-7878-42cc-8ed7-8f4e2f66182f" />
+        <option name="url" value="git@github.com:Kirill-Lemesev/surf_course.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/badges-3.1.2/lib/src/badge.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/../developmnent/flutter/packages/flutter/lib/src/material/badge.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/../developmnent/flutter/packages/flutter/lib/src/material/icon_button.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/../developmnent/flutter/packages/flutter/lib/src/painting/box_border.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/../developmnent/flutter/packages/flutter/lib/src/painting/box_decoration.dart" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2Wz7YbAMawTBcKz4oHG3EQ2MK9n" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Dart Command Line App.main.dart.executor": "Run",
+    "Flutter.main.dart (2).executor": "Run",
+    "Flutter.main.dart (3).executor": "Run",
+    "Flutter.main.dart (4).executor": "Run",
+    "Flutter.main.dart.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/kirilllemesev/surf_course",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "show.migrate.to.gradle.popup": "false"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/dark_theme" />
+      <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/dark_theme/dark_theme_one" />
+      <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme/bright_theme_one" />
+      <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/task_07/assets" />
+      <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/extentions" />
+      <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme/bright_theme_one" />
+      <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme/bright_theme_two" />
+      <recent name="$PROJECT_DIR$/task_06/lib/assets" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Flutter.main.dart">
+    <configuration name="main.dart (1)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_04/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart (2)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_05/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart (3)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_06/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart (4)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_07/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_01/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="surf_course" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="surf_course" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Flutter.main.dart (3)" />
+        <item itemvalue="Flutter.main.dart (2)" />
+        <item itemvalue="Flutter.main.dart (1)" />
+        <item itemvalue="Flutter.main.dart (4)" />
+        <item itemvalue="Flutter.main.dart (3)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b2ad2c18-89a6-42b5-a31c-d42952b1498f" name="Changes" comment="" />
+      <created>1697723602327</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697723602327</updated>
+    </task>
+    <task id="LOCAL-00001" summary="task 1">
+      <option name="closed" value="true" />
+      <created>1697723805655</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697723805655</updated>
+    </task>
+    <task id="LOCAL-00002" summary="counter v2.0">
+      <option name="closed" value="true" />
+      <created>1697724425060</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1697724425060</updated>
+    </task>
+    <task id="LOCAL-00003" summary="task 2">
+      <option name="closed" value="true" />
+      <created>1697724781850</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1697724781850</updated>
+    </task>
+    <task id="LOCAL-00004" summary="gesture master">
+      <option name="closed" value="true" />
+      <created>1697724989135</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1697724989136</updated>
+    </task>
+    <task id="LOCAL-00005" summary="task 3">
+      <option name="closed" value="true" />
+      <created>1697725267477</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1697725267477</updated>
+    </task>
+    <task id="LOCAL-00006" summary="app bar added">
+      <option name="closed" value="true" />
+      <created>1698513924833</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698513924833</updated>
+    </task>
+    <task id="LOCAL-00007" summary="frame with filter button added">
+      <option name="closed" value="true" />
+      <created>1698764968934</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1698764968934</updated>
+    </task>
+    <task id="LOCAL-00008" summary="list implemented">
+      <option name="closed" value="true" />
+      <created>1701254947110</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1701254947110</updated>
+    </task>
+    <task id="LOCAL-00009" summary="assets">
+      <option name="closed" value="true" />
+      <created>1701254964425</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1701254964425</updated>
+    </task>
+    <task id="LOCAL-00010" summary="information about purchases and botom navigation bar">
+      <option name="closed" value="true" />
+      <created>1701347079849</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1701347079849</updated>
+    </task>
+    <task id="LOCAL-00011" summary="improvements and fixes">
+      <option name="closed" value="true" />
+      <created>1704650732403</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1704650732403</updated>
+    </task>
+    <task id="LOCAL-00012" summary="sort state spinner added and improvements">
+      <option name="closed" value="true" />
+      <created>1705779360937</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1705779360937</updated>
+    </task>
+    <task id="LOCAL-00013" summary="ui fixes and new sort types implements">
+      <option name="closed" value="true" />
+      <created>1708108671857</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1708108671857</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fixes">
+      <option name="closed" value="true" />
+      <created>1708109674631</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1708109674631</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fixes and improvements">
+      <option name="closed" value="true" />
+      <created>1708865981885</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1708865981885</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fixes">
+      <option name="closed" value="true" />
+      <created>1708866246766</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1708866246766</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fixes">
+      <option name="closed" value="true" />
+      <created>1708934407496</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1708934407496</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fixes">
+      <option name="closed" value="true" />
+      <created>1709914065674</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1709914065676</updated>
+    </task>
+    <task id="LOCAL-00019" summary="task 5">
+      <option name="closed" value="true" />
+      <created>1710008135213</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1710008135213</updated>
+    </task>
+    <task id="LOCAL-00020" summary="data layer">
+      <option name="closed" value="true" />
+      <created>1710137905199</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1710137905200</updated>
+    </task>
+    <task id="LOCAL-00021" summary="palette screen implementation">
+      <option name="closed" value="true" />
+      <created>1710313634710</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1710313634710</updated>
+    </task>
+    <task id="LOCAL-00022" summary="color screen implementation">
+      <option name="closed" value="true" />
+      <created>1710351173521</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1710351173521</updated>
+    </task>
+    <task id="LOCAL-00023" summary="clibpoard and snackbar">
+      <option name="closed" value="true" />
+      <created>1710428127819</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1710428127819</updated>
+    </task>
+    <task id="LOCAL-00024" summary="task 6">
+      <option name="closed" value="true" />
+      <created>1711283484111</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1711283484111</updated>
+    </task>
+    <task id="LOCAL-00025" summary="app bar">
+      <option name="closed" value="true" />
+      <created>1711814994158</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1711814994158</updated>
+    </task>
+    <task id="LOCAL-00026" summary="user image">
+      <option name="closed" value="true" />
+      <created>1711818877825</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1711818877825</updated>
+    </task>
+    <task id="LOCAL-00027" summary="medals row">
+      <option name="closed" value="true" />
+      <created>1711820554337</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1711820554337</updated>
+    </task>
+    <task id="LOCAL-00028" summary="form items">
+      <option name="closed" value="true" />
+      <created>1711892988229</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1711892988229</updated>
+    </task>
+    <task id="LOCAL-00029" summary="log out button">
+      <option name="closed" value="true" />
+      <created>1711894385181</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1711894385181</updated>
+    </task>
+    <task id="LOCAL-00030" summary="system state observer added">
+      <option name="closed" value="true" />
+      <created>1712414479461</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1712414479462</updated>
+    </task>
+    <task id="LOCAL-00031" summary="bottomsheet and some fixes">
+      <option name="closed" value="true" />
+      <created>1716149397034</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1716149397034</updated>
+    </task>
+    <task id="LOCAL-00032" summary="final version">
+      <option name="closed" value="true" />
+      <created>1717071114790</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1717071114790</updated>
+    </task>
+    <task id="LOCAL-00033" summary="task 7">
+      <option name="closed" value="true" />
+      <created>1717426758970</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1717426758970</updated>
+    </task>
+    <task id="LOCAL-00034" summary="data">
+      <option name="closed" value="true" />
+      <created>1717435059103</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1717435059103</updated>
+    </task>
+    <task id="LOCAL-00035" summary="fixes">
+      <option name="closed" value="true" />
+      <created>1717514066299</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1717514066299</updated>
+    </task>
+    <task id="LOCAL-00036" summary="assets and data">
+      <option name="closed" value="true" />
+      <created>1717515589230</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1717515589230</updated>
+    </task>
+    <task id="LOCAL-00037" summary="main page">
+      <option name="closed" value="true" />
+      <created>1717596998723</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1717596998723</updated>
+    </task>
+    <task id="LOCAL-00038" summary="main page">
+      <option name="closed" value="true" />
+      <created>1717597012425</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1717597012425</updated>
+    </task>
+    <task id="LOCAL-00039" summary="scroll_image">
+      <option name="closed" value="true" />
+      <created>1717916004250</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1717916004251</updated>
+    </task>
+    <task id="LOCAL-00040" summary="fixes">
+      <option name="closed" value="true" />
+      <created>1719340576399</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1719340576399</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="HEAD" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="photo_gallery" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="information about purchases and botom navigation bar" />
+    <MESSAGE value="improvements and fixes" />
+    <MESSAGE value="sort state spinner added and improvements" />
+    <MESSAGE value="ui fixes and new sort types implements" />
+    <MESSAGE value="fixes and improvements" />
+    <MESSAGE value="task 5" />
+    <MESSAGE value="data layer" />
+    <MESSAGE value="palette screen implementation" />
+    <MESSAGE value="color screen implementation" />
+    <MESSAGE value="clibpoard and snackbar" />
+    <MESSAGE value="task 6" />
+    <MESSAGE value="app bar" />
+    <MESSAGE value="user image" />
+    <MESSAGE value="medals row" />
+    <MESSAGE value="form items" />
+    <MESSAGE value="log out button" />
+    <MESSAGE value="system state observer added" />
+    <MESSAGE value="bottomsheet and some fixes" />
+    <MESSAGE value="final version" />
+    <MESSAGE value="task 7" />
+    <MESSAGE value="data" />
+    <MESSAGE value="assets and data" />
+    <MESSAGE value="main page" />
+    <MESSAGE value="scroll_image" />
+    <MESSAGE value="fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

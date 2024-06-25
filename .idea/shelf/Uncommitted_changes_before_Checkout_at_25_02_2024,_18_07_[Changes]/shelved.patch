@@ -1,0 +1,18 @@
+Index: task_04/lib/presentation/widgets/radio_button.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flutter/material.dart';\nimport '../../entity/sort_types.dart';\nimport '../../entity/app_data.dart';\n\n\nclass _CustomFilledRadioIcon extends StatelessWidget {\n\n  const _CustomFilledRadioIcon();\n\n  @override\n  Widget build(BuildContext context) {\n    return const Stack(\n      alignment: Alignment.center,\n      children: [\n        SizedBox.square(\n          dimension: 20,\n          child: DecoratedBox(\n            decoration: BoxDecoration(\n              color: AppColors.lime,\n              shape: BoxShape.circle,\n            ),\n          ),\n        ),\n        SizedBox.square(\n          dimension: 6,\n          child: DecoratedBox(\n            decoration: BoxDecoration(\n              color: Colors.white,\n              shape: BoxShape.circle,\n            ),\n          ),\n        )\n      ],\n    );\n  }\n}\n\nclass CustomLabeledRadio extends StatelessWidget {\n\n  SortType chosenSortType;\n  final SortType itemSortType;\n  final String label;\n  final Function sortFunction;\n\n  CustomLabeledRadio(\n      {\n        required this.chosenSortType,\n        required this.itemSortType,\n        required this.label,\n        required this.sortFunction,\n        super.key});\n\n  @override\n  Widget build(BuildContext context) {\n    return InkWell(\n      onTap: () {\n        chosenSortType = itemSortType;\n        sortFunction(chosenSortType);\n        Navigator.pop(context);\n      },\n      child: Padding(\n        padding: const EdgeInsets.symmetric(vertical: 15),\n        child: Row(\n          children: [\n            (itemSortType == chosenSortType)\n                ? const _CustomFilledRadioIcon()\n                : const Icon(Icons.radio_button_off, color: AppColors.gray, size: 20),\n            const SizedBox(width: 20),\n            Text(label, style: AppTextStyle.noColor16Style,\n            )\n          ],\n        ),\n      ),\n    );\n  }\n}
+===================================================================
+diff --git a/task_04/lib/presentation/widgets/radio_button.dart b/task_04/lib/presentation/widgets/radio_button.dart
+--- a/task_04/lib/presentation/widgets/radio_button.dart	
++++ b/task_04/lib/presentation/widgets/radio_button.dart	
+@@ -48,7 +48,8 @@
+         required this.itemSortType,
+         required this.label,
+         required this.sortFunction,
+-        super.key});
++        super.key}
++      );
+ 
+   @override
+   Widget build(BuildContext context) {
