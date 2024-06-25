@@ -19,7 +19,6 @@ class ScrollScreen extends StatefulWidget {
 }
 
 class _ScrollScreenState extends State<ScrollScreen> {
-  static const _defaultAnimDuration = Duration(milliseconds: 300);
   late int _imageId = widget.imageID;
   late int _currentPage = widget.imageID - 1;
   late final _pageController = PageController(
@@ -82,35 +81,33 @@ class _ScrollScreenState extends State<ScrollScreen> {
                 _currentPage = index;
               });
             },
-            itemBuilder: (_, i) => Center(
-                  child: AnimatedScale(
-                    key: ValueKey(_currentPage),
-                    duration: const Duration(milliseconds: 300),
-                    scale: _currentPage == i ? 1 : 0.8,
-                    child: GestureDetector(
-                      onTap: () => _pageController.animateToPage(
-                        i,
-                        duration: _defaultAnimDuration,
-                        curve: Curves.easeIn,
+            itemBuilder: (_, i) {
+              var scale = _currentPage == i ? 1.0 : 0.8;
+              return TweenAnimationBuilder(
+                tween: Tween(begin: scale, end: scale),
+                duration: const Duration(milliseconds: 600),
+                child: Stack(
+                  children: [
+                    ScrollImage(url: widget.imagesList[i].url),
+                    if (i != _currentPage.round())
+                      ClipRect(
+                        child: BackdropFilter(
+                          filter: ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                          child: Container(
+                            color: Colors.black.withOpacity(0),
+                          ),
+                        ),
                       ),
-                      child: Stack(
-                        children: [
-                          ScrollImage(url: widget.imagesList[i].url),
-                          if (i != _currentPage.round())
-                            ClipRect(
-                              child: BackdropFilter(
-                                filter: ui.ImageFilter.blur(
-                                    sigmaX: 5.0, sigmaY: 5.0),
-                                child: Container(
-                                  color: Colors.black.withOpacity(0),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )),
+                  ],
+                ),
+                builder: (context, value, child) {
+                  return Transform.scale(
+                    scale: value,
+                    child: child,
+                  );
+                },
+              );
+            }),
       ),
     );
   }

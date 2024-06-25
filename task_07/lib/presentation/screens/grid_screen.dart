@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surf_flutter_courses_template/assets/app_colors.dart';
-import 'package:surf_flutter_courses_template/presentation/widgets/grid _image.dart';
+import 'package:surf_flutter_courses_template/presentation/widgets/grid_image.dart';
 import 'package:surf_flutter_courses_template/data/mock_data.dart';
 
 class GridScreen extends StatefulWidget {
