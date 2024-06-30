@@ -11,16 +11,25 @@ class MagicBall extends StatefulWidget {
 }
 
 class _MagicBallState extends State<MagicBall> {
+  bool _isRequested = false;
+  bool _isScaled = false;
+  double _scale = 1.0;
+
+
+  _toggleScale () {
+    setState(() {
+      _isScaled = !_isScaled;
+      _scale = (_isScaled) ? 3.0 : 1.0;
+    });
+
+  }
+
   @override
   void initState() {
     super.initState();
     ShakeDetector.autoStart(
       onPhoneShake: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Тряска!'),
-          ),
-        );
+        _toggleScale();
       },
       minimumShakeCount: 1,
       shakeSlopTimeMS: 500,
@@ -35,36 +44,43 @@ class _MagicBallState extends State<MagicBall> {
     return Stack(children: [
       GestureDetector(
         onTap: () {
-          setState(() {
-          });
+         _toggleScale();
         },
         child: Center(
-            child: Image.asset(
-          'assets/magic_ball.png',
-          fit: BoxFit.fill,
+            child: AnimatedContainer(
+          transform: Matrix4.identity()..scale(_scale),
+          transformAlignment: Alignment.center,
+          duration: const Duration(seconds: 1),
+          child: Image.asset(
+            'assets/magic_ball.png',
+            fit: BoxFit.fill,
+          ),
         )),
       ),
-      Column(
-        children: [
-          Expanded(
-              child: SizedBox(
-            width: 10,
-          )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(AppText.hint, style: AppTextStyles.hint,),
-            ],
-          ),
-          SizedBox(
-            height: 40,
-          )
-        ],
-      )
+      if (!_isRequested) ...{
+        const Column(
+          children: [
+            Expanded(
+                child: SizedBox(
+              width: 10,
+            )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  AppText.hint,
+                  style: AppTextStyles.hint,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 40,
+            )
+          ],
+        )
+      }
     ]);
   }
 }
 
-
-//Animated Container
 //Text animation
