@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
+    <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2ad2c18-89a6-42b5-a31c-d42952b1498f" name="Changes" comment="fixes" />
+    <list default="true" id="b2ad2c18-89a6-42b5-a31c-d42952b1498f" name="Changes" comment="fixes">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_01/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/task_01/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_02/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/task_02/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_02/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/task_02/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_03/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/task_03/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_04/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/task_04/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_05/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/task_05/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_06/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/task_06/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_07/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/task_07/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_08/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/task_08/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_08/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/task_08/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_08/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/task_08/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -20,7 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="photo_gallery" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -64,21 +81,29 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Dart Command Line App.main.dart.executor": "Run",
+    "Flutter.main.dart (1).executor": "Run",
     "Flutter.main.dart (2).executor": "Run",
     "Flutter.main.dart (3).executor": "Run",
     "Flutter.main.dart (4).executor": "Run",
+    "Flutter.main.dart (5).executor": "Run",
+    "Flutter.main.dart (6).executor": "Run",
     "Flutter.main.dart.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "magic__ball",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/kirilllemesev/surf_course",
-    "project.structure.last.edited": "Artifacts",
+    "last_opened_file_path": "/Users/kirilllemesev/AndroidStudioProjects/surf_course",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "settings.editor.selected.configurable": "flutter.settings",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
@@ -91,16 +116,16 @@
       <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/task_08/assets" />
       <recent name="$PROJECT_DIR$/task_07/assets" />
       <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/extentions" />
       <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme/bright_theme_one" />
       <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme/bright_theme_two" />
-      <recent name="$PROJECT_DIR$/task_06/lib/assets" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.main.dart">
-    <configuration name="main.dart (1)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/task_04/lib/main.dart" />
+  <component name="RunManager" selected="Flutter.main.dart (1)">
+    <configuration name="main.dart (1)" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_08/lib/main.dart" />
       <method v="2" />
     </configuration>
     <configuration name="main.dart (2)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
@@ -112,33 +137,28 @@
       <method v="2" />
     </configuration>
     <configuration name="main.dart (4)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_03/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart (5)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/task_07/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_04/lib/main.dart" />
       <method v="2" />
     </configuration>
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/task_01/lib/main.dart" />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="surf_course" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="surf_course" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Flutter.main.dart (5)" />
         <item itemvalue="Flutter.main.dart (3)" />
         <item itemvalue="Flutter.main.dart (2)" />
-        <item itemvalue="Flutter.main.dart (1)" />
+        <item itemvalue="Flutter.main.dart" />
         <item itemvalue="Flutter.main.dart (4)" />
-        <item itemvalue="Flutter.main.dart (3)" />
       </list>
     </recent_temporary>
   </component>
