@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
+    <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2ad2c18-89a6-42b5-a31c-d42952b1498f" name="Changes" comment="fixes" />
+    <list default="true" id="b2ad2c18-89a6-42b5-a31c-d42952b1498f" name="Changes" comment="zoom animation added">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_08/lib/assets/app_colors.dart" beforeDir="false" afterPath="$PROJECT_DIR$/task_08/lib/assets/app_colors.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_08/lib/assets/app_styles.dart" beforeDir="false" afterPath="$PROJECT_DIR$/task_08/lib/assets/app_styles.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_08/lib/presentation/magic_ball_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/task_08/lib/presentation/magic_ball_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_08/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/task_08/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_08/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/task_08/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -20,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="photo_gallery" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -64,21 +74,29 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Dart Command Line App.main.dart.executor": "Run",
+    "Flutter.main.dart (1).executor": "Run",
     "Flutter.main.dart (2).executor": "Run",
     "Flutter.main.dart (3).executor": "Run",
     "Flutter.main.dart (4).executor": "Run",
+    "Flutter.main.dart (5).executor": "Run",
+    "Flutter.main.dart (6).executor": "Run",
     "Flutter.main.dart.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "magic__ball",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/kirilllemesev/surf_course",
-    "project.structure.last.edited": "Artifacts",
+    "last_opened_file_path": "/Users/kirilllemesev/AndroidStudioProjects/surf_course",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
@@ -91,16 +109,16 @@
       <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/task_08/assets" />
       <recent name="$PROJECT_DIR$/task_07/assets" />
       <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/extentions" />
       <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme/bright_theme_one" />
       <recent name="$PROJECT_DIR$/task_06/lib/assets/themes/bright_theme/bright_theme_two" />
-      <recent name="$PROJECT_DIR$/task_06/lib/assets" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.main.dart">
-    <configuration name="main.dart (1)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/task_04/lib/main.dart" />
+  <component name="RunManager" selected="Flutter.main.dart (1)">
+    <configuration name="main.dart (1)" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_08/lib/main.dart" />
       <method v="2" />
     </configuration>
     <configuration name="main.dart (2)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
@@ -112,33 +130,28 @@
       <method v="2" />
     </configuration>
     <configuration name="main.dart (4)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_03/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart (5)" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/task_07/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/task_04/lib/main.dart" />
       <method v="2" />
     </configuration>
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/task_01/lib/main.dart" />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="surf_course" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="surf_course" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Flutter.main.dart (5)" />
         <item itemvalue="Flutter.main.dart (3)" />
         <item itemvalue="Flutter.main.dart (2)" />
-        <item itemvalue="Flutter.main.dart (1)" />
+        <item itemvalue="Flutter.main.dart" />
         <item itemvalue="Flutter.main.dart (4)" />
-        <item itemvalue="Flutter.main.dart (3)" />
       </list>
     </recent_temporary>
   </component>
@@ -471,7 +484,31 @@
       <option name="project" value="LOCAL" />
       <updated>1719340576399</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="main page ange gesture and shake detectors">
+      <option name="closed" value="true" />
+      <created>1719751940905</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1719751940906</updated>
+    </task>
+    <task id="LOCAL-00042" summary="app text">
+      <option name="closed" value="true" />
+      <created>1719751957857</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1719751957857</updated>
+    </task>
+    <task id="LOCAL-00043" summary="zoom animation added">
+      <option name="closed" value="true" />
+      <created>1719773966655</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1719773966655</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -518,9 +555,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="information about purchases and botom navigation bar" />
-    <MESSAGE value="improvements and fixes" />
-    <MESSAGE value="sort state spinner added and improvements" />
     <MESSAGE value="ui fixes and new sort types implements" />
     <MESSAGE value="fixes and improvements" />
     <MESSAGE value="task 5" />
@@ -543,7 +577,10 @@
     <MESSAGE value="main page" />
     <MESSAGE value="scroll_image" />
     <MESSAGE value="fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
+    <MESSAGE value="main page ange gesture and shake detectors" />
+    <MESSAGE value="app text" />
+    <MESSAGE value="zoom animation added" />
+    <option name="LAST_COMMIT_MESSAGE" value="zoom animation added" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
