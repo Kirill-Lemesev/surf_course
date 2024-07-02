@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
+import 'package:dio/dio.dart';
+import 'package:surf_flutter_courses_template/assets/app_colors.dart';
 import 'package:surf_flutter_courses_template/assets/app_styles.dart';
 import 'package:surf_flutter_courses_template/assets/app_text.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MagicBall extends StatefulWidget {
   const MagicBall({super.key});
@@ -11,17 +14,48 @@ class MagicBall extends StatefulWidget {
 }
 
 class _MagicBallState extends State<MagicBall> {
-  bool _isRequested = false;
+  bool _isRequested = true;
   bool _isScaled = false;
-  double _scale = 1.0;
+  double _scale = 1;
+  double _opacity = 0.0;
+  late String _prediction;
+  bool _isLoading = false;
 
-
-  _toggleScale () {
+  void _toggleScale() async {
     setState(() {
+      _isRequested = false;
       _isScaled = !_isScaled;
       _scale = (_isScaled) ? 3.0 : 1.0;
+      _isLoading = true;
     });
 
+    await _requestPrediction();
+
+    setState(() {
+      _isLoading = false;
+      _opacity = 1.0;
+    });
+  }
+
+  Future<void> _requestPrediction() async {
+    final options = BaseOptions(
+      connectTimeout: const Duration(seconds: 5),
+      receiveTimeout: const Duration(seconds: 3),
+    );
+    final Dio dio = Dio(options);
+    try {
+      final response = await dio.get('https://eightballapi.com/api');
+      final data = response.data["reading"];
+      setState(() {
+        _prediction = data;
+      });
+    } catch (e) {
+      if (e is DioException) {
+        setState(() {
+          _prediction = AppText.error;
+        });
+      }
+    }
   }
 
   @override
@@ -29,14 +63,15 @@ class _MagicBallState extends State<MagicBall> {
     super.initState();
     ShakeDetector.autoStart(
       onPhoneShake: () {
-        _toggleScale();
+        if (_isRequested) {
+          _toggleScale();
+        }
       },
       minimumShakeCount: 1,
       shakeSlopTimeMS: 500,
       shakeCountResetTime: 3000,
       shakeThresholdGravity: 2.7,
     );
-    //detector.stopListening();
   }
 
   @override
@@ -44,20 +79,22 @@ class _MagicBallState extends State<MagicBall> {
     return Stack(children: [
       GestureDetector(
         onTap: () {
-         _toggleScale();
+          if (_isRequested) {
+            _toggleScale();
+          }
         },
         child: Center(
             child: AnimatedContainer(
           transform: Matrix4.identity()..scale(_scale),
           transformAlignment: Alignment.center,
-          duration: const Duration(seconds: 1),
+          duration: const Duration(seconds: 300),
           child: Image.asset(
             'assets/magic_ball.png',
             fit: BoxFit.fill,
           ),
         )),
       ),
-      if (!_isRequested) ...{
+      if (_isRequested) ...{
         const Column(
           children: [
             Expanded(
@@ -78,9 +115,38 @@ class _MagicBallState extends State<MagicBall> {
             )
           ],
         )
+      } else ...{
+        Center(
+          child: (_isLoading)
+              ? const SpinKitThreeBounce(
+                  color: AppColors.white,
+                )
+              : AnimatedOpacity(
+                  opacity: _opacity,
+                  duration: const Duration(seconds: 300),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(_prediction,
+                                  style: (_prediction == AppText.error)
+                                      ? AppTextStyles.errorText
+                                      : AppTextStyles.successText,
+                                ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+        )
       }
     ]);
   }
 }
-
-//Text animation
