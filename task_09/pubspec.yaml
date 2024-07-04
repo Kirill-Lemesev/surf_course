@@ -18,3 +18,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - 'assets/dog.png'
+    - 'assets/cat.png'
+    - 'assets/parrot.png'
+    - 'assets/hamster.png'
