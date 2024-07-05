@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:surf_flutter_courses_template/presentation/form.dart';
 
-void main() {
-  runApp(MainApp());
-}
+void main() => MainApp();
 
 class MainApp extends StatelessWidget {
   MainApp({super.key});
@@ -10,13 +9,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: ImageIcon(AssetImage('assets/dog.png'), color: Colors.white,),
-        ),
-      ),
+      home: PetForm(),
     );
   }
 }
-
