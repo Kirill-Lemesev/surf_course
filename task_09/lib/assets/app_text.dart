@@ -13,8 +13,7 @@ abstract class AppText {
   static const ownerMailError = 'Укажите почту формата name@mail.com';
   static const vaccinations = 'Сделаны прививки от:';
   static const rage = 'бешенства';
-  static const rageVaccinations = 'Укажите дату последней прививки';
-  static const rageError = 'бешенства';
+  static const rageVaccinations = 'Дата последней прививки';
   static const covid = 'ковида';
   static const malaria = 'малярии';
   static const button = 'Отправить';

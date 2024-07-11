@@ -6,14 +6,17 @@ abstract class AppFonts {
       TextStyle(fontSize: 12, color: AppColors.black);
   static const grayTextSize12 =
       TextStyle(fontSize: 12, color: AppColors.placeHolderGray);
+  static const redTextSize12 =
+      TextStyle(fontSize: 12, color: AppColors.red);
   static const blackTextSize16 =
       TextStyle(fontSize: 16, color: AppColors.black);
   static const grayTextSize16 =
       TextStyle(fontSize: 16, color: AppColors.placeHolderGray);
   static const blueTextSize16 = TextStyle(fontSize: 16, color: AppColors.blue);
+  static const redTextSize16 = TextStyle(fontSize: 16, color: AppColors.red);
   static const grayTextSize18 =
       TextStyle(fontSize: 18, color: AppColors.backgroundGray);
   static const whiteTextSize18 =
       TextStyle(fontSize: 18, color: AppColors.white);
-  static const blueTextSize24 = TextStyle(fontSize: 24, color: AppColors.blue);
+  static const blueTextSize24 = TextStyle(fontSize: 24, color: AppColors.blue, fontWeight: FontWeight.bold);
 }
