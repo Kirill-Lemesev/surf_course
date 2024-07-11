@@ -1,0 +1,1 @@
+enum Animal {dog, cat, parrot, hamster}
